@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Academy - Login</title>
+    <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+<body>
+    <div class="page_wrap">
+        <div id="toastContainer"></div>
+        <div class="loginwrap">
+           <div class="loginwrap_inner">
+                <div class="loginwrap_header">
+                    <div class="logo-placeholder" id="logoContainer">
+                    <a href="/"><img src="./assets/images/logo.png" alt="ePlus"></a>
+                    </div>
+                    <h1>Central Academy</h1>
+                </div>
+                <div class="loginwrap_form">
+                    <form id="loginForm" class="formWrap">
+                        <div class="inputWrap">
+                            <input type="text" id="email" placeholder="Email Address" required>
+                        </div>
+
+                        <div class="inputWrap">
+                            <input type="password" id="password" placeholder="Password" required>
+                        </div>
+
+                        <button type="submit" class="mBtn" id="loginBtn">Log In</button>
+
+                        <div class="fpLink">
+                            <a href="/forgot-password.html">Forgot Password?</a>
+                        </div>
+                    </form>
+                </div>
+           </div>
+        </div>
+           
+
+       
+    </div>
+    <script>
+        (function checkAuth() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const token = localStorage.getItem('token');
+
+            if (isLoggedIn === 'true' && token) {
+                window.location.replace('dashboard.html'); 
+            }
+        })();
+    </script>
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>
