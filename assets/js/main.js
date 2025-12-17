@@ -1,20 +1,4 @@
-// Toggle action
 
-const toggleBtn = document.querySelector('.sideBar_toggleBtn');
-const sidebar = document.querySelector('.sideBar');
-const menuLinks  = document.querySelector('.sideBar_menu ul li');
-const toggleIcon = toggleBtn.querySelector('.material-symbols-outlined');
-
-toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('collapsed');
-
-    if (sidebar.classList.contains('collapsed')) {
-        toggleIcon.textContent = 'chevron_right';
-    } else {
-        toggleIcon.textContent = 'chevron_left';
-        sidebarMenuList.add('hidden')
-    }
-});
 
 
 
@@ -36,7 +20,7 @@ function showToast(message, type = 'success') {
 }
 
 /* LOGIN HANDLER */
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
+document.getElementById('loginBtn').addEventListener('click', async (e) => {
     e.preventDefault();
 
     const email = document.getElementById('email').value;
