@@ -76,11 +76,19 @@
                     font-family: $medium;
                     color: $white;
                     letter-spacing: 1px;
+                    transition: all 400ms ease-in-out;
                     @include breakpoint(1536px){
                         font-size: 16px;
                     }
+                    &:hover{
+                        color: $white;
+                        p{
+                            color: $white;
+                        }
+                    }
                     p{
                         min-width: 200px;
+                        transition: all 400ms ease-in-out;
                     }
                 }
                 &:first-child{

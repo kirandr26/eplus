@@ -1,0 +1,226 @@
+.cardsWrap{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    grid-gap: 20px;
+    &_item{
+        position: relative;
+        padding: 30px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-gap: 10px;
+        border-radius: 20px;
+        background-color: rgba($blue, 0.1);
+        width: 100%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        min-height: 150px;
+        flex-direction: column;
+        @include breakpoint(1536px){
+            padding: 20px;
+            height: auto;
+        }
+        &_icon{
+            position: relative;
+            min-width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $blue;
+            border-radius: 50%;
+            span{
+                color: $white;
+            }
+        }
+        &_details{
+            position: relative;
+            text-align: center;
+            p{
+                font-size: 20px;
+                font-family: $semiBold;
+                line-height: 1.3;
+                margin-bottom: 10px;
+            }
+            h2{
+                font-size: 32px;
+                font-family: $semiBold;
+                color: $blue;
+            }
+        }
+    }
+}
+
+.calfacWrap{
+    position: relative;
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    grid-gap: 20px;
+    @include breakpoint(1536px){
+        margin-top: 20px;
+    }
+    @include breakpoint(1366px){
+       flex-direction: column;
+    }
+    &_cal{
+        position: relative;
+        background-color: rgba($blue, 0.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        min-width: 500px;
+        min-height: 560px;
+        padding: 20px;
+        border-radius: 20px;
+        @include breakpoint(1536px){
+            min-width: 350px;
+            min-height: 540px;
+        }
+        .subTitle{
+            margin-bottom: 20px;
+        }
+        .calendar-header{
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .calendar-nav{
+                position: relative;
+                padding: 10px;
+                border: 0;
+                background-color: $blue;
+                border-radius: 50%;
+                min-width: 40px;
+                height: 40px;
+                color: $white;
+                font-size: 24px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 600;
+            }
+            .calendar-month{
+                font-size: 20px;
+                line-height: 1;
+                font-weight: 600;
+            }
+        }
+        .calendar-table{
+            position: relative;
+            width: 100%;
+            margin-top: 20px;
+            padding:  0 20px;
+            tr{
+                th,td{
+                    padding: 25px 10px;
+                    text-align: center;
+                    @include breakpoint(1536px){
+                        padding: 10px;
+                        
+                    }
+                }
+                td{
+                    position: relative;
+                    font-size: 18px;
+                    
+                    &.holiday{
+                        position: relative;
+                       
+                        border-radius: 50%;
+                        color: $white;
+                        font-family: $medium;
+                        cursor: pointer;
+                        span{
+                            padding: 10px;
+                             background-color: red;
+                            border-radius: 50%;
+                            color: $white;
+                            font-family: $medium;
+                        }
+                        &:after {
+                            content: attr(data-holiday);
+                            position: absolute;
+                            bottom: 95%;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            background: $blue;
+                            color: $white;
+                            padding: 10px 20px;
+                            border-radius: 4px;
+                            font-size: 16px;
+                            white-space: nowrap;
+                            opacity: 0;
+                            pointer-events: none;
+                            transition: opacity 0.2s ease;
+                            z-index: 10;
+                            @include breakpoint(1536px){
+                                bottom: 125%;
+                            }
+                        }
+                        &:before {
+                            content: '';
+                            position: absolute;
+                            bottom: 66%;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            border-width: 10px;
+                            border-style: solid;
+                            border-color: $blue transparent transparent transparent;
+                            opacity: 0;
+                            @include breakpoint(1536px){
+                                bottom: 70%;
+                            }
+                        }
+                        &:hover{
+                            &:before, &:after{
+                                opacity: 1;
+                            }
+                        }
+                    }
+                    &.today{
+                        span{
+                            padding: 10px;
+                            background-color: #FF6B35;
+                            border-radius: 50%;
+                            color: $white;
+                            font-family: $medium;
+                        }
+                    }
+                }
+            }
+            thead{
+                tr{
+                    th{
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+        
+    }
+    &_table{
+        width: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        
+        @include breakpoint(1366px){
+            min-height: 100%;
+        }
+        #teachTable_wrapper{
+             @include breakpoint(1536px){
+                min-height: 650px;
+            }
+        }
+        .badge{
+            position: relative;
+            padding: 10px;
+            border-radius: 50px;
+            text-transform: capitalize;
+            &.badge-success{
+                background-color: green;
+            }
+        }
+    }
+}

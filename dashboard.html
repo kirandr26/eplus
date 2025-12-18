@@ -6,7 +6,7 @@
     <title>Dashboard - ePlus</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-
+    <link rel="stylesheet" href="//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 <body>
@@ -17,7 +17,101 @@
                
             </div>
             <div class="mainArticle">
-
+                <div class="cardsWrap">
+                    <div class="cardsWrap_item">
+                        <div class="cardsWrap_item_icon">
+                            <span class="material-symbols-outlined">school</span>
+                        </div>
+                        <div class="cardsWrap_item_details">
+                            <p>Students</p>
+                            <h2 id="studentsCount">0</h2>
+                        </div>
+                    </div>
+                    <div class="cardsWrap_item">
+                        <div class="cardsWrap_item_icon">
+                             <span class="material-symbols-outlined">groups</span>
+                        </div>
+                        <div class="cardsWrap_item_details">
+                            <p>Teachers</p>
+                            <h2 id="teachersCount">0</h2>
+                        </div>
+                    </div>
+                    <div class="cardsWrap_item">
+                        <div class="cardsWrap_item_icon">
+                              <span class="material-symbols-outlined">calendar_month</span>
+                        </div>
+                        <div class="cardsWrap_item_details">
+                            <p>Events</p>
+                            <h2 id="eventsCount">0</h2>
+                        </div>
+                    </div>
+                    <div class="cardsWrap_item">
+                        <div class="cardsWrap_item_icon">
+                            <span class="material-symbols-outlined">supervised_user_circle_off</span>
+                        </div>
+                        <div class="cardsWrap_item_details">
+                            <p>Students absent Today</p>
+                            <h2 id="spresentCount">0</h2>
+                        </div>
+                    </div>
+                    <div class="cardsWrap_item">
+                        <div class="cardsWrap_item_icon">
+                            <span class="material-symbols-outlined">supervised_user_circle_off</span>
+                        </div>
+                        <div class="cardsWrap_item_details">
+                            <p>Faculty absent Today</p>
+                            <h2 id="fpresentCount">0</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="calfacWrap">
+                    <div class="calfacWrap_cal">
+                        <div class="calendar-section">
+                            <div class="calendar-title subTitle">School Calendar</div>
+                            <div class="calendar-header">
+                                <button class="calendar-nav" onclick="previousMonth()">‹</button>
+                                <div class="calendar-month" id="current-month">December 2025</div>
+                                <button class="calendar-nav" onclick="nextMonth()">›</button>
+                            </div>
+                            
+                            <table class="calendar-table">
+                                <thead>
+                                    <tr>
+                                        <th>Su</th>
+                                        <th>Mo</th>
+                                        <th>Tu</th>
+                                        <th>We</th>
+                                        <th>Th</th>
+                                        <th>Fr</th>
+                                        <th>Sa</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="calendar-body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="calfacWrap_table ">
+                        <table id="teachTable" class="mTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Designation</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- JS will populate -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="feeTable fTable">
+                    <table id="feeSummaryTable"></table>
+                </div>
             </div>
         </div>
        
@@ -32,8 +126,12 @@
             }
         })();
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/2.3.5/js/dataTables.min.js"></script>
     <script src="./assets/js/sidebar-loader.js"></script>
     <script src="./assets/js/main.js"></script>
+   
+
     
 </body>
 </html>
