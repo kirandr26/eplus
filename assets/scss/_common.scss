@@ -13,9 +13,9 @@
     line-height: 1;
     font-weight: 800;
     letter-spacing: 1px;
-    @include breakpoint(767px){
+    @include breakpoint(1536px){
         font-size: 16px;
-        padding: 15px 30px;
+        padding: 12px 20px;
     }
     &:disabled{
         opacity: 0.5;
@@ -24,6 +24,12 @@
         padding: 10px ;
         font-size: 12px;
         text-align: center;
+    }
+    &.iconBtn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-gap: 10px;
     }
 }
 .hidden{
@@ -42,7 +48,8 @@
     overflow-y: auto;
     padding: 50px;
     @include breakpoint(1536px){
-        padding: 50px 30px;
+        padding: 30px;
+        padding-left: 50px;
     }
 }
 .subTitle{
@@ -51,6 +58,9 @@
     line-height: 1.5;
     font-family: $semiBold;
     color: $blue;
+    @include breakpoint(1536px){
+        font-size: 20px;
+    }
 }
 .dt-container{
     height: 100%;
@@ -185,7 +195,100 @@ table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-numeric{
 .fTable{
     position: relative;
     margin-top: 50px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     @include breakpoint(1536px){
         margin-top: 20px;
+    }
+    &_header{
+        &_bottom{
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            grid-gap: 30px;
+            margin-top: 20px;
+        }
+        &_actions{
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            grid-gap: 30px;
+            &_filter{
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                grid-gap: 20px;
+            }
+        }
+    }
+    &.fhTable{
+        
+        tr{
+            &:nth-child(odd){
+                background-color: rgba($blue, 0.1);
+            }
+            td,th{
+                padding: 15px;
+                
+            }
+        }
+    }
+}
+.pageTitle{
+    position: relative;
+    font-size: 32px;
+    line-break: 1.5;
+    font-family: $bold;
+    color: $blue;
+     @include breakpoint(1536px){
+         font-size: 26px;
+    }
+}
+.selectric-wrapper{
+    min-width: 250px;
+    @include breakpoint(1536px){
+        min-width: 200px;
+    }
+    .selectric{
+        border-radius: 20px;
+        
+        .label{
+            padding: 0 15px;
+            font-size: 14px;
+            font-family: $semiBold;
+            letter-spacing: 1px;
+            line-height: 40px;
+        }
+        
+    }
+    .selectric-items{
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        .selectric-scroll{
+            
+            li{
+               font-size: 14px;
+               &.highlighted{
+                position: relative;
+                background: $blue;
+                color: $white;
+               }
+               &:hover{
+                background: $blue;
+                color: $white;
+               }
+            }
+        }
+    }
+    &.selectric-open{
+        .selectric{
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom: 0;
+        }
     }
 }

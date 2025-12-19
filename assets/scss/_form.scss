@@ -5,7 +5,7 @@
         font-weight: 500;
         color: $blue;
         margin-bottom: 15px;
-        @include breakpoint(767px){
+        @include breakpoint(1536px){
             font-size: 20px;
         }
     }
@@ -21,7 +21,7 @@
         display: block;
         border-radius: 30px;
         width: 100%;
-        @include breakpoint(767px){
+        @include breakpoint(1536px){
             font-size: 16px;
             padding: 12px 20px;
         }

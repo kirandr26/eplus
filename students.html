@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ePlus</title>
+    <link rel="stylesheet" href="./assets/css/selectric.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+<body>
+    <div class="page_wrap">
+       
+        <div class="eContainer">
+            <div class="sideBar">
+               
+            </div>
+            <div class="mainArticle">
+                <div class="fTable_header">
+                    <div class="fTable_header_top">
+                        <div class="fTable_header_title">
+                            <h1 class="pageTitle">Students</h1>
+                        </div>
+                        <div class="fTable_header_profile">
+
+                        </div>
+                    </div>
+                    <div class="fTable_header_bottom">
+                        <div class="fTable_header_search">
+                            <div class="inputWrap">
+                                <input type="search" id="searchStudent" placeholder="Search Student" required>
+                            </div>
+                        </div>
+                        <div class="fTable_header_actions">
+                            <div class="fTable_header_actions_filter">
+                                <select id="standardSelect">
+                                    <option value="">Select Standard</option>
+                                </select>
+                                <!-- hidden initially -->
+                                <select id="sectionSelect" style="display:none;">
+                                    <option value="">Select Section</option>
+                                </select>
+                            </div>
+                            <div class="fTable_header_actions_addNew">
+                                <button type="button" class="mBtn iconBtn">Add Student 
+                                    <span class="material-symbols-outlined">add</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="studentsTable fTable fhTable">
+                    <table id="studentsTable"></table>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <script>
+        (function checkAuth() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const token = localStorage.getItem('token');
+
+            if (isLoggedIn != 'true'  ||  !token) {
+                window.location.replace('index.html'); 
+            }
+        })();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/2.3.5/js/dataTables.min.js"></script>
+    <script src="./assets/js/sidebar-loader.js"></script>
+    <script src="./assets/js/jquery.selectric.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+   
+
+    
+</body>
+</html>

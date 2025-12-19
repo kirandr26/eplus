@@ -212,10 +212,10 @@ body a :hover {
   font-weight: 800;
   letter-spacing: 1px;
 }
-@media (max-width: 767px) {
+@media (max-width: 1536px) {
   .mBtn {
     font-size: 16px;
-    padding: 15px 30px;
+    padding: 12px 20px;
   }
 }
 .mBtn:disabled {
@@ -225,6 +225,18 @@ body a :hover {
   padding: 10px;
   font-size: 12px;
   text-align: center;
+}
+.mBtn.iconBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  grid-gap: 10px;
 }
 
 .hidden {
@@ -253,7 +265,8 @@ body a :hover {
 }
 @media (max-width: 1536px) {
   .mainArticle {
-    padding: 50px 30px;
+    padding: 30px;
+    padding-left: 50px;
   }
 }
 
@@ -263,6 +276,11 @@ body a :hover {
   line-height: 1.5;
   font-family: "Raleway-SemiBold";
   color: #223285;
+}
+@media (max-width: 1536px) {
+  .subTitle {
+    font-size: 20px;
+  }
 }
 
 .dt-container {
@@ -389,11 +407,114 @@ table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-numeric {
 .fTable {
   position: relative;
   margin-top: 50px;
+  border-radius: 20px;
+  overflow: hidden;
+  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 @media (max-width: 1536px) {
   .fTable {
     margin-top: 20px;
   }
+}
+.fTable_header_bottom {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  grid-gap: 30px;
+  margin-top: 20px;
+}
+.fTable_header_actions {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  grid-gap: 30px;
+}
+.fTable_header_actions_filter {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  grid-gap: 20px;
+}
+.fTable.fhTable tr:nth-child(odd) {
+  background-color: rgba(34, 50, 133, 0.1);
+}
+.fTable.fhTable tr td, .fTable.fhTable tr th {
+  padding: 15px;
+}
+
+.pageTitle {
+  position: relative;
+  font-size: 32px;
+  line-break: 1.5;
+  font-family: "Raleway-Bold";
+  color: #223285;
+}
+@media (max-width: 1536px) {
+  .pageTitle {
+    font-size: 26px;
+  }
+}
+
+.selectric-wrapper {
+  min-width: 250px;
+}
+@media (max-width: 1536px) {
+  .selectric-wrapper {
+    min-width: 200px;
+  }
+}
+.selectric-wrapper .selectric {
+  border-radius: 20px;
+}
+.selectric-wrapper .selectric .label {
+  padding: 0 15px;
+  font-size: 14px;
+  font-family: "Raleway-SemiBold";
+  letter-spacing: 1px;
+  line-height: 40px;
+}
+.selectric-wrapper .selectric-items {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.selectric-wrapper .selectric-items .selectric-scroll li {
+  font-size: 14px;
+}
+.selectric-wrapper .selectric-items .selectric-scroll li.highlighted {
+  position: relative;
+  background: #223285;
+  color: #fff;
+}
+.selectric-wrapper .selectric-items .selectric-scroll li:hover {
+  background: #223285;
+  color: #fff;
+}
+.selectric-wrapper.selectric-open .selectric {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 0;
 }
 
 .sidebar {
@@ -408,7 +529,7 @@ table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-numeric {
   color: #223285;
   margin-bottom: 15px;
 }
-@media (max-width: 767px) {
+@media (max-width: 1536px) {
   .inputWrap label {
     font-size: 20px;
   }
@@ -427,7 +548,7 @@ table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-numeric {
   border-radius: 30px;
   width: 100%;
 }
-@media (max-width: 767px) {
+@media (max-width: 1536px) {
   .inputWrap input {
     font-size: 16px;
     padding: 12px 20px;

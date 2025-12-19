@@ -21,6 +21,21 @@ function showToast(message, type = 'success') {
 }
 
 /*************************
+ * Format Date
+ *************************/
+function formatDate(isoDate) {
+    if (!isoDate) return '-';
+
+    const date = new Date(isoDate);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+}
+
+/*************************
  * LOGIN HANDLER (SAFE)
  *************************/
 const loginBtn = document.getElementById('loginBtn');
@@ -275,7 +290,9 @@ function nextMonth() {
 
 
 
-// Fetch teachers list
+/*************************
+ * Teachers Data in Dashboard
+ *************************/
 const table = new DataTable('#teachTable', {
     processing: true,
     serverSide: true,
@@ -359,7 +376,9 @@ const table = new DataTable('#teachTable', {
         }
     ]
 });
-
+/*************************
+ * Fee Table in Dashboard
+ *************************/
 
 const feeTable = new DataTable('#feeSummaryTable', {
     processing: true,
@@ -467,6 +486,186 @@ table.on('draw', function () {
 });
 
 
+
+/*************************
+ * Student Page
+ *************************/
+/* ================= GLOBAL ================= */
+let selectedStandardId = '';
+let selectedSectionId = '';
+let searchText = '';
+const pageLimit = 10;
+let standardsData = [];
+
+/* ================= DATATABLE ================= */
+const studentTable = new DataTable('#studentsTable', {
+    processing: true,
+    serverSide: true,
+    paging: true,
+    pageLength: pageLimit,
+    lengthChange: false,
+    searching: false,
+    ordering: false,
+
+    ajax: function (data, callback) {
+
+        const page = Math.floor(data.start / data.length) + 1;
+
+        let params = new URLSearchParams({
+            page: page,
+            limit: pageLimit
+        });
+
+        if (selectedStandardId) params.append('standard_id', selectedStandardId);
+        if (selectedSectionId) params.append('section_id', selectedSectionId);
+        if (searchText) params.append('search', searchText);
+
+        fetch(`${API_URL}/api/adminServices/students/all?${params.toString()}`, {
+            headers: { Authorization: `Bearer ${authToken}` }
+        })
+        .then(res => res.json())
+        .then(res => {
+
+            const rows = res.data.students.map(s => ({
+                reg_no: s.registration_number,
+                name: s.name,
+                dob: formatDate(s.dob),
+                parent_name: s.parent_name,
+                phone: s.parent_phone ?? '-',
+                grade_section: `${s.standard_name} - ${s.section_name}`
+            }));
+
+            callback({
+                draw: data.draw,
+                recordsTotal: res.data.pagination.total_records,
+                recordsFiltered: res.data.pagination.total_records,
+                data: rows
+            });
+        })
+        .catch(() => callback({
+            draw: data.draw,
+            recordsTotal: 0,
+            recordsFiltered: 0,
+            data: []
+        }));
+    },
+
+    columns: [
+        { data: "reg_no", title: "Reg No" },
+        { data: "name", title: "Student Name" },
+        { data: "dob", title: "DOB" },
+        { data: "parent_name", title: "Parent Name" },
+        { data: "phone", title: "Phone" },
+        { data: "grade_section", title: "Grade / Section" }
+    ],
+
+    /* ===== Make entire row clickable ===== */
+    rowCallback: function (row, data) {
+        $(row)
+            .css('cursor', 'pointer')
+            .off('click')
+            .on('click', function () {
+                window.location.href = `/student-details.html?regid=${data.reg_no}`;
+            });
+    }
+});
+
+/* ================= SELECTRIC HELPERS ================= */
+function destroySelectric($el) {
+    if ($el.data('selectric')) {
+        $el.selectric('destroy');
+    }
+}
+
+/* ================= INIT STANDARD ================= */
+$('#standardSelect').selectric({
+    disableOnMobile: false,
+    nativeOnMobile: false
+});
+
+/* ================= LOAD STANDARDS ================= */
+function loadStandards() {
+    fetch(`${API_URL}/api/adminServices/standards`, {
+        headers: { Authorization: `Bearer ${authToken}` }
+    })
+    .then(res => res.json())
+    .then(res => {
+
+        standardsData = res.data || [];
+
+        let html = `<option value="">Select Standard</option>`;
+        standardsData.forEach(s => {
+            html += `<option value="${s.id}">${s.name}</option>`;
+        });
+
+        $('#standardSelect').html(html).selectric('refresh');
+        resetSection();
+    });
+}
+
+/* ================= RESET SECTION ================= */
+function resetSection() {
+    const $sec = $('#sectionSelect');
+    destroySelectric($sec);
+    $sec.hide().html(`<option value="">Select Section</option>`);
+    selectedSectionId = '';
+}
+
+/* ================= STANDARD CHANGE ================= */
+$('#standardSelect').on('change', function () {
+
+    selectedStandardId = this.value || '';
+    resetSection();
+
+    if (!selectedStandardId) {
+        studentTable.ajax.reload();
+        return;
+    }
+
+    const std = standardsData.find(s => s.id == selectedStandardId);
+    if (!std || !std.sections) return;
+
+    let html = `<option value="">Select Section</option>`;
+    std.sections.forEach(sec => {
+        html += `<option value="${sec.id}">${sec.name}</option>`;
+    });
+
+    const $sec = $('#sectionSelect');
+    $sec.html(html).show();
+
+    if ($sec.find('option').length > 1) {
+        $sec.selectric({
+            disableOnMobile: false,
+            nativeOnMobile: false
+        });
+    }
+
+    studentTable.ajax.reload();
+});
+
+/* ================= SECTION CHANGE ================= */
+$(document).on('change', '#sectionSelect', function () {
+    selectedSectionId = this.value || '';
+    studentTable.ajax.reload();
+});
+
+/* ================= SEARCH (LIVE) ================= */
+let searchTimer = null;
+$('#searchStudent').on('input', function () {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+        searchText = this.value.trim();
+        studentTable.ajax.reload();
+    }, 300); // debounce
+});
+
+/* ================= INIT ================= */
+loadStandards();
+
+
+
+
+
 /*************************
  * INIT
  *************************/
@@ -474,3 +673,5 @@ window.addEventListener('DOMContentLoaded', () => {
     fetchDashboardData();
     renderCalendar();
 });
+
+
