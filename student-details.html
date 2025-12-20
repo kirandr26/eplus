@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ePlus</title>
+    <link rel="stylesheet" href="./assets/css/selectric.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+<body>
+    <div class="page_wrap">
+        <div id="toastContainer"></div>
+    <div class="eContainer">
+        <div class="sideBar"></div>
+
+        <div class="mainArticle">
+            <h1 class="pageTitle mb-4">Student Details</h1>
+
+            <div class="fullWidthForm">
+                <form id="studentForm">
+                    <div class="formInner">
+
+                        <!-- ================= PERSONAL DETAILS ================= -->
+                        <h4 class="formSectionTitle">Personal Details</h4>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="text" id="name" placeholder="Student Name" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="text" id="registration_number" placeholder="Registration Number" readonly>
+                            </div>
+                        </div>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="text" id="admission_no" placeholder="Admission No" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="date" id="dob" readonly>
+                            </div>
+                        </div>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="text" id="gender" placeholder="Gender" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="text" id="blood_group" placeholder="Blood Group" readonly>
+                            </div>
+                        </div>
+
+                        <div class="inputWrap">
+                            <input type="email" id="email" placeholder="Email" readonly>
+                        </div>
+
+                        <div class="inputWrap">
+                            <input type="text" id="city" placeholder="Class / City" readonly>
+                        </div>
+
+                        <!-- ================= PARENT DETAILS ================= -->
+                        <h4 class="formSectionTitle">Parent / Guardian Details</h4>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="text" id="parent_name" placeholder="Parent Name" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="text" id="parent_phone" placeholder="Parent Phone" readonly>
+                            </div>
+                        </div>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="text" id="parent_occupation" placeholder="Parent Occupation" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="number" id="parent_income" placeholder="Parent Income" readonly>
+                            </div>
+                        </div>
+
+                        <!-- ================= SCHOOL DETAILS ================= -->
+                        <h4 class="formSectionTitle">School Details</h4>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="text" id="standard_id" placeholder="Standard ID" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="text" id="section_id" placeholder="Section ID" readonly>
+                            </div>
+                        </div>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="text" id="standard_name" placeholder="Standard Name" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="text" id="section_name" placeholder="Section Name" readonly>
+                            </div>
+                        </div>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="date" id="admission_date" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="text" id="previous_school" placeholder="Previous School" readonly>
+                            </div>
+                        </div>
+
+                        <!-- ================= OTHER DETAILS ================= -->
+                        <h4 class="formSectionTitle">Other Details</h4>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="text" id="aadhaar_no" placeholder="Aadhaar Number" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="text" id="medium" placeholder="Medium" readonly>
+                            </div>
+                        </div>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="text" id="religion" placeholder="Religion" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="text" id="category" placeholder="Category" readonly>
+                            </div>
+                        </div>
+
+                        <div class="inputWrap">
+                            <textarea id="address" placeholder="Address" readonly></textarea>
+                        </div>
+
+                        <div class="inputWrap">
+                            <textarea id="medical_history" placeholder="Medical History" readonly></textarea>
+                        </div>
+
+                        <div class="formInputWrap">
+                            <div class="inputWrap">
+                                <input type="text" id="special_needs" placeholder="Special Needs" readonly>
+                            </div>
+                            <div class="inputWrap">
+                                <input type="text" id="status" placeholder="Status" readonly>
+                            </div>
+                        </div>
+
+                        <!-- ================= ACTIONS ================= -->
+                        <div class="inputWrap btnWrap d-flex gap-2">
+                            <button type="button" class="mBtn" id="editBtn">Edit</button>
+                            <button type="button" class="mBtn mBtn_medium d-none" id="updateBtn">Update</button>
+                            <button type="button" class="mBtn dangerBtn" id="deleteBtn">Delete</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+     <div class="modal fade" id="stuDeleteModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="stuDeleteModalLongTitle">Delete Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modalForm">
+                    <form action="" method="post" id="studentForm">
+                        <div class="inputWrap btnWrap">
+                            <label for="delText">Please enter <span style="color: red;font-weight: 600;"> DELETE  </span>to confirm</label>
+                            <input type="text" id="delText" placeholder="Please Enter" autocomplete="off">
+                        </div>
+                        <div class="inputWrap btnWrap mt-4 flexEnd">
+                            <button type="button" class="mBtn mBtn_medium dangerBtn" id="addStudentDeleteBtn">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <script>
+        (function checkAuth() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const token = localStorage.getItem('token');
+
+            if (isLoggedIn != 'true'  ||  !token) {
+                window.location.replace('index.html'); 
+            }
+        })();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/2.3.5/js/dataTables.min.js"></script>
+    <script src="./assets/js/sidebar-loader.js"></script>
+    <script src="./assets/js/jquery.selectric.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script>
+    /*************************
+     * STUDENT DETAILS
+     *************************/
+    const params = new URLSearchParams(window.location.search);
+    const STUDENT_ID = params.get("regid");
+
+    if (!STUDENT_ID) {
+        window.location.href = "students.html";
+    }
+
+    /*************************
+     * FETCH STUDENT ON LOAD
+     *************************/
+    $(document).ready(function () {
+        fetchStudent();
+    });
+
+    /*************************
+     * FETCH STUDENT
+     *************************/
+    function fetchStudent() {
+        $.ajax({
+            url: `${API_URL}/api/adminServices/students/${STUDENT_ID}`,
+            type: "GET",
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            },
+            success: function (res) {
+                if (!res || !res.data) {
+                    showToast("Student data not found", "error");
+                    return;
+                }
+
+                const d = res.data;
+
+                $("#name").val(d.name || "");
+                $("#registration_number").val(d.registration_number || "");
+                $("#admission_no").val(d.admission_no || "");
+                $("#dob").val(d.dob ? d.dob.split("T")[0] : "");
+                $("#gender").val(d.gender || "");
+                $("#blood_group").val(d.blood_group || "");
+                $("#parent_name").val(d.parent_name || "");
+                $("#parent_phone").val(d.parent_phone || "");
+                $("#email").val(d.email || "");
+                $("#city").val(d.city || "");
+                $("#address").val(d.address || "");
+            },
+            error: function () {
+                showToast("Failed to fetch student details", "error");
+                setTimeout(() => {
+                    window.location.href = "students.html";
+                }, 3000);
+            }
+        });
+    }
+
+    /*************************
+     * ENABLE EDIT
+     *************************/
+    $("#editBtn").on("click", function () {
+        $("#studentForm input, #studentForm textarea").prop("readonly", false);
+        $("#updateBtn").removeClass("d-none");
+        $(this).addClass("d-none");
+    });
+
+    /*************************
+     * UPDATE STUDENT
+     *************************/
+    $("#updateBtn").on("click", function () {
+
+        const payload = {};
+
+        $("#studentForm").find("input, textarea, select").each(function () {
+            const id = $(this).attr("id");
+            if (id) {
+                payload[id] = $(this).val();
+            }
+        });
+
+        $.ajax({
+            url: `${API_URL}/api/adminServices/students/${STUDENT_ID}`,
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${authToken}`,
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify(payload),
+            success: function () {
+                showToast("Student updated successfully", "success");
+            }
+        });
+    });
+
+
+    /*************************
+     * DELETE STUDENT
+     *************************/
+    /*************************
+     * SHOW DELETE MODAL
+     *************************/
+    $('#deleteBtn').on('click', function () {
+        $('#stuDeleteModalCenter').modal('show');
+    });
+
+    /*************************
+     * CONFIRM & DELETE STUDENT
+     *************************/
+    $("#addStudentDeleteBtn").on("click", function () {
+
+        const confirmText = $('#delText').val().trim();
+
+        if (confirmText !== 'DELETE') {
+            showToast("Please type DELETE to confirm", "error");
+            return;
+        }
+
+        $.ajax({
+            url: `${API_URL}/api/adminServices/students/${STUDENT_ID}`,
+            type: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            },
+            success: function () {
+                showToast("Student deleted successfully", "success");
+                $('#stuDeleteModalCenter').modal('hide');
+
+                setTimeout(() => {
+                    window.location.href = "students.html";
+                }, 3000);
+            },
+            error: function () {
+                showToast("Failed to delete student", "error");
+                setTimeout(() => {
+                    window.location.href = "students.html";
+                }, 3000);
+            }
+        });
+    });
+
+    </script>
+
+    
+</body>
+</html>

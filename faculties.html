@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="page_wrap">
-        <div id="toastContainer"></div>
+       
         <div class="eContainer">
             <div class="sideBar">
                
@@ -22,7 +22,7 @@
                 <div class="fTable_header">
                     <div class="fTable_header_top">
                         <div class="fTable_header_title">
-                            <h1 class="pageTitle">Students</h1>
+                            <h1 class="pageTitle">Faculties</h1>
                         </div>
                         <div class="fTable_header_profile">
 
@@ -31,29 +31,14 @@
                     <div class="fTable_header_bottom">
                         <div class="fTable_header_search">
                             <div class="inputWrap">
-                                <input type="search" id="searchStudent" placeholder="Search Student" required autocomplete="off">
+                                <input type="search" id="searchTeacher" placeholder="Search Teacher" required autocomplete="off">
                             </div>
                         </div>
-                        <div class="fTable_header_actions">
-                            <div class="fTable_header_actions_filter">
-                                <select id="standardSelect">
-                                    <option value="">Select Standard</option>
-                                </select>
-                                <!-- hidden initially -->
-                                <select id="sectionSelect" style="display:none;">
-                                    <option value="">Select Section</option>
-                                </select>
-                            </div>
-                            <div class="fTable_header_actions_addNew">
-                                <button type="button" class="mBtn iconBtn" id="addStudBtn" data-bs-toggle="modal" data-bs-target="#studentsModalCenter">Add Student 
-                                    <span class="material-symbols-outlined">add</span></button>
-
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
                 <div class="studentsTable fTable fhTable">
-                    <table id="studentsTable"></table>
+                    <table id="teachersTable"></table>
                 </div>
             </div>
         </div>
@@ -65,33 +50,27 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="studentsModalLongTitle">Add Student</h5>
+                <h5 class="modal-title" id="studentsModalLongTitle">Modal title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="modalForm">
-                    <form action="" method="post" id="studentForm">
-                        <div class="formInner">
-                            <div class="formInputWrap">
-                                <div class="inputWrap">
-                                    <input type="text" id="fName" placeholder="Enter First Name" required autocomplete="off">
-                                </div>
-                                <div class="inputWrap">
-                                    <input type="text" id="lName" placeholder="Enter Last Name" autocomplete="off">
-                                </div>
+                    <form action="" method="post">
+                        <div class="formInputWrap">
+                             <div class="inputWrap">
+                                <input type="text" id="fName" placeholder="Enter First Name" required>
                             </div>
                             <div class="inputWrap">
-                                <input type="email" id="stuEmail" placeholder="Enter your email" autocomplete="off">
-                            </div>
-                            <div class="inputWrap">
-                                <input type="text" id="stuCity" placeholder="Enter City" autocomplete="off">
-                            </div>
-                            <div class="inputWrap btnWrap">
-                               <button type="button" class="mBtn mBtn_medium" id="addStudentBtn">Add Student</button>
+                                <input type="text" id="lName" placeholder="Enter Last Name" required>
                             </div>
                         </div>
+                       
                     </form>
                 </div>
+            </div>
+            <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
             </div>
         </div>

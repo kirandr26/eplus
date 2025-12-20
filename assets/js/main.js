@@ -21,6 +21,38 @@ function showToast(message, type = 'success') {
 }
 
 /*************************
+ * MENU FUNCTION
+ *************************/
+(function activateSidebarMenu() {
+    const observer = new MutationObserver(() => {
+        const menuLinks = document.querySelectorAll('.sideBar_menu a');
+        if (!menuLinks.length) return;
+
+        const currentPath = window.location.pathname.toLowerCase();
+
+        menuLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href || href === 'javascript:void(0)') return;
+
+            if (currentPath.includes(href.toLowerCase())) {
+                link.classList.add('active');
+                link.closest('li')?.classList.add('active');
+            }
+        });
+
+        observer.disconnect(); // ✅ run once only
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
+
+
+
+
+/*************************
  * Format Date
  *************************/
 function formatDate(isoDate) {
@@ -493,7 +525,7 @@ table.on('draw', function () {
 /* ================= GLOBAL ================= */
 let selectedStandardId = '';
 let selectedSectionId = '';
-let searchText = '';
+let studentSearchText = '';
 const pageLimit = 10;
 let standardsData = [];
 
@@ -518,7 +550,7 @@ const studentTable = new DataTable('#studentsTable', {
 
         if (selectedStandardId) params.append('standard_id', selectedStandardId);
         if (selectedSectionId) params.append('section_id', selectedSectionId);
-        if (searchText) params.append('search', searchText);
+        if (studentSearchText) params.append('search', studentSearchText);
 
         fetch(`${API_URL}/api/adminServices/students/all?${params.toString()}`, {
             headers: { Authorization: `Bearer ${authToken}` }
@@ -527,6 +559,7 @@ const studentTable = new DataTable('#studentsTable', {
         .then(res => {
 
             const rows = res.data.students.map(s => ({
+                id: s.id,
                 reg_no: s.registration_number,
                 name: s.name,
                 dob: formatDate(s.dob),
@@ -564,8 +597,8 @@ const studentTable = new DataTable('#studentsTable', {
         $(row)
             .css('cursor', 'pointer')
             .off('click')
-            .on('click', function () {
-                window.location.href = `/student-details.html?regid=${data.reg_no}`;
+           .on('click', function () {
+                window.open(`/student-details.html?regid=${data.id}`, '_blank');
             });
     }
 });
@@ -654,7 +687,7 @@ let searchTimer = null;
 $('#searchStudent').on('input', function () {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
-        searchText = this.value.trim();
+        studentSearchText  = this.value.trim();
         studentTable.ajax.reload();
     }, 300); // debounce
 });
@@ -663,7 +696,161 @@ $('#searchStudent').on('input', function () {
 loadStandards();
 
 
+/* ================= ADD STUDENT FORM ================= */
+document.getElementById("addStudentBtn").addEventListener("click", function () {
+    const firstName = document.getElementById("fName").value.trim();
+    const lastName  = document.getElementById("lName").value.trim();
+    const email     = document.getElementById("stuEmail").value.trim();
+    const city      = document.getElementById("stuCity").value.trim();
+    $(this).addClass('disabled')
+    // Combine name (ONLY required field)
+    const name = `${firstName} ${lastName}`.trim();
 
+    if (!firstName) {
+        showToast('Name is required', 'error');
+        return;
+    }
+
+    const payload = {
+        name: name,
+        admission_no: "",
+        city: city || "",
+        email: email || ""
+    };
+
+    fetch(`${API_URL}/api/adminServices/students`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":  `Bearer ${authToken}` // if required
+        },
+        body: JSON.stringify(payload)
+    })
+
+    .then(res => res.json())
+    .then(response => {
+        if (response.status) {
+            showToast(response.message);
+            document.getElementById("studentForm").reset();
+            setTimeout(()=>{
+                location.reload();
+            },3000)
+        } else {
+            showToast(response.message, 'error');
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert("API Error");
+    });
+});
+
+/*************************
+ * Teachers Page
+ *************************/
+
+/* ================= DATATABLE ================= */
+let teacherSearchText = '';
+const teacherTable = new DataTable('#teachersTable', {
+    processing: true,
+    serverSide: true,
+    paging: true,
+    pageLength: pageLimit,
+    lengthChange: false,
+    searching: false,
+    ordering: false,
+
+    ajax: function (data, callback) {
+
+        const page = Math.floor(data.start / data.length) + 1;
+
+        let params = new URLSearchParams({
+            page: page,
+            limit: pageLimit
+        });
+
+        if (teacherSearchText) params.append('search', teacherSearchText);
+
+        fetch(`${API_URL}/api/adminServices/faculty/facultylist?${params.toString()}`, {
+            headers: {
+                Authorization: `Bearer ${authToken}`
+            }
+        })
+        .then(res => res.json())
+        .then(res => {
+
+           const rows = res.data.faculties.map(f => ({
+                emp_id: f.employee_id ?? '-',
+                name: f.name ?? '-',
+                designation: f.designation ?? '-',   // ✅ FIX
+                phone: f.phone ?? '-',
+                email: f.email ?? '-',
+                experience: f.experience_years != null 
+                    ? `${f.experience_years} yrs` 
+                    : '-',
+                status: f.status ?? '-'
+            }));
+
+            callback({
+                draw: data.draw,
+                recordsTotal: res.data.pagination.total,
+                recordsFiltered: res.data.pagination.total,
+                data: rows
+            });
+        })
+        .catch(() => callback({
+            draw: data.draw,
+            recordsTotal: 0,
+            recordsFiltered: 0,
+            data: []
+        }));
+    },
+
+    columns: [
+        { data: "emp_id", title: "Employee ID" },
+        { data: "name", title: "Teacher Name" },
+        { data: "designation", title: "Designation" },
+        { data: "phone", title: "Phone" },
+        { data: "email", title: "Email" },
+        { data: "experience", title: "Experience" },
+        {
+            data: "status",
+            title: "Status",
+            // render: status => {
+            //     const cls = status === "active" ? "badge-success" : "badge-danger";
+            //     return `<span class="badge ${cls}">${status}</span>`;
+            // }
+            render: function (status) {
+                if (!status) return '-';
+
+                const cls = status === 'active'
+                    ? 'statusText'
+                    : 'statusText';
+
+                return `<span class="${cls}">${status}</span>`;
+            }
+        }
+    ],
+
+    /* ===== Make entire row clickable ===== */
+    rowCallback: function (row, data) {
+        $(row)
+            .css('cursor', 'pointer')
+            .off('click')
+            .on('click', function () {
+                window.location.href = `/teacher-details.html?empid=${data.emp_id}`;
+            });
+    }
+});
+let teacherSearchTimer = null;
+
+$(document).on('input', '#searchTeacher', function () {
+    clearTimeout(teacherSearchTimer);
+    teacherSearchTimer = setTimeout(() => {
+        teacherSearchText = this.value.trim();
+        teacherTable.ajax.reload();
+    }, 300);
+});
 
 
 /*************************
@@ -673,5 +860,6 @@ window.addEventListener('DOMContentLoaded', () => {
     fetchDashboardData();
     renderCalendar();
 });
+
 
 

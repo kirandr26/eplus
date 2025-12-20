@@ -238,6 +238,14 @@ body a :hover {
           align-items: center;
   grid-gap: 10px;
 }
+.mBtn_medium {
+  font-weight: 600;
+  padding: 15px 40px;
+  font-size: 16px;
+}
+.mBtn.dangerBtn {
+  background-color: red;
+}
 
 .hidden {
   display: none !important;
@@ -517,24 +525,81 @@ table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-numeric {
   border-bottom: 0;
 }
 
+.statusText {
+  position: relative;
+  text-transform: capitalize;
+}
+
+.badge {
+  position: relative;
+  padding: 10px;
+  border-radius: 50px;
+  text-transform: capitalize;
+}
+.badge.badge-success {
+  background-color: green;
+}
+.badge.badge-danger {
+  background-color: red;
+}
+
+.modal-title {
+  position: relative;
+  font-size: 24px;
+  line-height: 34px;
+  font-family: "Raleway-SemiBold";
+  color: #223285;
+}
+
+button:focus {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  outline: none !important;
+}
+button:focus-visible {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  outline: none !important;
+}
+button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+.dataTable {
+  min-height: 350px;
+}
+
+.flexEnd {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .sidebar {
   position: relative;
   width: 300px;
 }
 
 .inputWrap label {
-  font-size: 24px;
-  line-height: 28px;
+  font-size: 16px;
+  line-height: 26px;
   font-weight: 500;
-  color: #223285;
+  color: #515151;
   margin-bottom: 15px;
 }
 @media (max-width: 1536px) {
   .inputWrap label {
-    font-size: 20px;
+    font-size: 14px;
   }
 }
-.inputWrap input {
+.inputWrap input, .inputWrap textarea {
   position: relative;
   padding: 15px 30px;
   outline: none;
@@ -549,10 +614,86 @@ table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-numeric {
   width: 100%;
 }
 @media (max-width: 1536px) {
-  .inputWrap input {
+  .inputWrap input, .inputWrap textarea {
     font-size: 16px;
     padding: 12px 20px;
   }
+}
+
+.formInner {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  grid-gap: 20px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.formInner .formInputWrap {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  grid-gap: 20px;
+}
+.formInner .inputWrap {
+  width: 100%;
+}
+.formInner .btnWrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+textarea {
+  min-height: 120px;
+}
+
+input:-moz-read-only {
+  cursor: not-allowed;
+}
+
+input:read-only {
+  cursor: not-allowed;
+}
+
+.fullWidthForm {
+  position: relative;
+  max-width: 980px;
+}
+.fullWidthForm .formInputWrap {
+  width: 100%;
+}
+.fullWidthForm .formSectionTitle {
+  position: relative;
+  text-align: left;
+  width: 100%;
+  font-size: 24px;
+  margin: 35px 20px 20px 0;
+  font-family: "Raleway-SemiBold";
+  color: #223285;
+  padding-top: 50px;
+  border-top: 1px solid #C4C4C4;
 }
 
 .loginwrap {

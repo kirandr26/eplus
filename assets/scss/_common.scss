@@ -31,6 +31,14 @@
         align-items: center;
         grid-gap: 10px;
     }
+    &_medium{
+        font-weight: 600;
+         padding: 15px 40px;
+         font-size: 16px;
+    }
+    &.dangerBtn{
+        background-color: red;
+    }
 }
 .hidden{
     display: none !important;
@@ -291,4 +299,51 @@ table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-numeric{
             border-bottom: 0;
         }
     }
+}
+.statusText{
+    position: relative;
+    text-transform: capitalize;
+}
+.badge {
+    position: relative;
+    padding: 10px;
+    border-radius: 50px;
+    text-transform: capitalize;
+    &.badge-success{
+        background-color: green;
+    }
+    &.badge-danger{
+        background-color: red;
+    }
+}
+.modal-title{
+    position: relative;
+    font-size: 24px;
+    line-height: 34px;
+    font-family: $semiBold;
+    color: $blue;
+}
+
+button{
+  &:focus{
+    box-shadow: none !important;
+    outline: none  !important;
+  }
+  &:focus-visible{
+    box-shadow: none  !important;
+    outline: none  !important;
+  }
+  &.disabled{
+    opacity: 0.5;
+    cursor: not-allowed !important;
+  }
+}
+
+.dataTable{
+    min-height: 350px;
+}
+.flexEnd{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }

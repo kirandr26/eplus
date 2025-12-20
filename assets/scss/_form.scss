@@ -1,15 +1,15 @@
 .inputWrap {
     label{
-        font-size: 24px;
-        line-height: 28px;
+        font-size: 16px;
+        line-height: 26px;
         font-weight: 500;
-        color: $blue;
+        color: $black;
         margin-bottom: 15px;
         @include breakpoint(1536px){
-            font-size: 20px;
+            font-size: 14px;
         }
     }
-    input{
+    input,textarea{
         position: relative;
         padding: 15px 30px;
         outline: none;
@@ -25,5 +25,52 @@
             font-size: 16px;
             padding: 12px 20px;
         }
+    }
+}
+.formInner{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-gap: 20px;
+    flex-direction: column;
+    .formInputWrap{
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        grid-gap: 20px;
+    }
+    .inputWrap{
+        width: 100%;
+    }
+    .btnWrap{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}
+textarea{
+    min-height: 120px;
+}
+input:read-only{
+    cursor: not-allowed;
+}
+.fullWidthForm{
+    position: relative;
+    max-width: 980px;
+    .formInputWrap{
+        width: 100%;
+    }
+    .formSectionTitle{
+        position: relative;
+        text-align: left;
+        width: 100%;
+        font-size: 24px;
+        margin: 35px 20px 20px 0;
+        font-family: $semiBold;
+        color: $blue;
+        padding-top: 50px;
+        border-top: 1px solid $lightWhite;
     }
 }
