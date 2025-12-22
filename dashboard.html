@@ -17,57 +17,66 @@
                
             </div>
             <div class="mainArticle">
+                
                 <div class="cardsWrap">
-                    <div class="cardsWrap_item">
-                        <div class="cardsWrap_item_icon">
-                            <span class="material-symbols-outlined">school</span>
-                        </div>
-                        <div class="cardsWrap_item_details">
-                            <p>Students</p>
-                            <h2 id="studentsCount">0</h2>
-                        </div>
+                    <div class="sectionWrap">
+                        <h3>School Administration Dashboard</h3>
+                        <p>Welcome back! Here's what's happening today.</p>
                     </div>
-                    <div class="cardsWrap_item">
-                        <div class="cardsWrap_item_icon">
-                             <span class="material-symbols-outlined">groups</span>
+                    <div class="cardsWrap_inner">
+                        <div class="cardsWrap_item">
+                            <div class="cardsWrap_item_details">
+                                <p>Students</p>
+                                <h2 id="studentsCount">0</h2>
+                            </div>
+                            <div class="cardsWrap_item_icon">
+                               <img src="./assets/images/dashboard/student-icon.svg" alt="">
+                            </div>
                         </div>
-                        <div class="cardsWrap_item_details">
-                            <p>Teachers</p>
-                            <h2 id="teachersCount">0</h2>
+                        <div class="cardsWrap_item">
+                            <div class="cardsWrap_item_details">
+                                <p>Teachers</p>
+                                <h2 id="teachersCount">0</h2>
+                            </div>
+                            <div class="cardsWrap_item_icon">
+                               <img src="./assets/images/dashboard/teachers-icon.svg" alt="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="cardsWrap_item">
-                        <div class="cardsWrap_item_icon">
-                              <span class="material-symbols-outlined">calendar_month</span>
+                        <div class="cardsWrap_item">
+                            <div class="cardsWrap_item_details">
+                                <p>Events</p>
+                                <h2 id="eventsCount">0</h2>
+                            </div>
+                            <div class="cardsWrap_item_icon">
+                               <img src="./assets/images/dashboard/events-icon.svg" alt="">
+                            </div>
                         </div>
-                        <div class="cardsWrap_item_details">
-                            <p>Events</p>
-                            <h2 id="eventsCount">0</h2>
+                        <div class="cardsWrap_item">
+                            <div class="cardsWrap_item_details">
+                                <p>Students absent Today</p>
+                                <h2 id="spresentCount">0</h2>
+                            </div>
+                            <div class="cardsWrap_item_icon">
+                               <img src="./assets/images/dashboard/stu-absent-icon.svg" alt="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="cardsWrap_item">
-                        <div class="cardsWrap_item_icon">
-                            <span class="material-symbols-outlined">supervised_user_circle_off</span>
-                        </div>
-                        <div class="cardsWrap_item_details">
-                            <p>Students absent Today</p>
-                            <h2 id="spresentCount">0</h2>
-                        </div>
-                    </div>
-                    <div class="cardsWrap_item">
-                        <div class="cardsWrap_item_icon">
-                            <span class="material-symbols-outlined">supervised_user_circle_off</span>
-                        </div>
-                        <div class="cardsWrap_item_details">
-                            <p>Faculty absent Today</p>
-                            <h2 id="fpresentCount">0</h2>
+                        <div class="cardsWrap_item">
+                            <div class="cardsWrap_item_details">
+                                <p>Faculty absent Today</p>
+                                <h2 id="fpresentCount">0</h2>
+                            </div>
+                            <div class="cardsWrap_item_icon">
+                               <img src="./assets/images/dashboard/fac-absent-icon.svg" alt="">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="calfacWrap">
                     <div class="calfacWrap_cal">
                         <div class="calendar-section">
-                            <div class="calendar-title subTitle">School Calendar</div>
+                             <div class="sectionWrap">
+                                <h3>School Calendar</h3>
+                            </div>
                             <div class="calendar-header">
                                 <button class="calendar-nav" onclick="previousMonth()">‹</button>
                                 <div class="calendar-month" id="current-month">December 2025</div>
@@ -90,8 +99,44 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="leaveSection">
+                            <div class="sectionWrap">
+                                <h3>Faculties on Leave</h3>
+                            </div>
+                            <ul>
+                                <li>
+                                    <p>Dr. Priya Sharma</p>
+                                    <small>FAC215</small>
+                                    <i>Sick Leave</i>
+                                </li>
+                                <li>
+                                    <p>Mr. Amit Patel</p>
+                                    <small>FAC215</small>
+                                    <i class="cl">Casual Leave</i>
+                                </li>
+                                <li>
+                                    <p>Dr. Neha Desai</p>
+                                    <small>FAC215</small>
+                                    <i class="ul">Upcoming Leave - Dec 24</i>
+                                </li>
+                                <li>
+                                    <p>Mr. Ravi Kumar</p>
+                                    <small>FAC215</small>
+                                    <i class="al">Annual Leave</i>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="calfacWrap_table ">
+                         <div class="sectionWrap">
+                            <h3>School Administration Dashboard</h3>
+                            <p>Welcome back! Here's what's happening today.</p>
+                        </div>
+                        <div class="calfacWrap_table_search">
+                            <div class="inputWrap">
+                                <input type="search" name="" id="" placeholder="Search by name or employee ID...">
+                            </div>
+                        </div>
                         <table id="teachTable" class="mTable">
                             <thead>
                                 <tr>
@@ -100,7 +145,6 @@
                                     <th>Designation</th>
                                     <th>Email</th>
                                     <th>Status</th>
-                                    <th>View</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -110,7 +154,11 @@
                     </div>
                 </div>
                 <div class="feeTable fTable">
-                    <table id="feeSummaryTable"></table>
+                    <div class="sectionWrap">
+                        <h3>Fee Collection Summary</h3>
+                        <p>Track fee collection across all standards</p>
+                    </div>
+                    <table id="feeSummaryTable" class="mTable"></table>
                 </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
 *, *:before, *:after{
     box-sizing: border-box;
     padding: 0;
@@ -17,6 +18,7 @@
     text-size-adjust: none;
     font-family: $regular;
     margin: 0;
+    color: $black;
   }
   
   footer, header, nav, section, main{
@@ -68,3 +70,6 @@
   
 
 
+body{
+  background-color: #F9FAFB;
+}

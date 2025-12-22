@@ -356,7 +356,7 @@ const table = new DataTable('#teachTable', {
                 designation: f.designation || "-",
                 email: f.email,
                 status: f.status,
-                action: f.employee_id
+                
             }));
 
             callback({
@@ -390,20 +390,20 @@ const table = new DataTable('#teachTable', {
                 return `<span class="badge ${cls}">${status}</span>`;
             }
         },
-        {
-            data: "action",
-            title: "Action",
-            render: id => `
-                <a href="/faculty/view/${id}" class="mBtn sBtn">
-                    View
-                </a>
-            `
-        }
+        // {
+        //     data: "action",
+        //     title: "Action",
+        //     render: id => `
+        //         <a href="/faculty/view/${id}" class="mBtn sBtn">
+        //             View
+        //         </a>
+        //     `
+        // }
     ],
 
     columnDefs: [
         {
-            targets: [5],
+            targets: [4],
             orderable: false
         }
     ]
@@ -519,235 +519,18 @@ table.on('draw', function () {
 
 
 
-/*************************
- * Student Page
- *************************/
-/* ================= GLOBAL ================= */
-let selectedStandardId = '';
-let selectedSectionId = '';
-let studentSearchText = '';
-const pageLimit = 10;
-let standardsData = [];
-
-/* ================= DATATABLE ================= */
-const studentTable = new DataTable('#studentsTable', {
-    processing: true,
-    serverSide: true,
-    paging: true,
-    pageLength: pageLimit,
-    lengthChange: false,
-    searching: false,
-    ordering: false,
-
-    ajax: function (data, callback) {
-
-        const page = Math.floor(data.start / data.length) + 1;
-
-        let params = new URLSearchParams({
-            page: page,
-            limit: pageLimit
-        });
-
-        if (selectedStandardId) params.append('standard_id', selectedStandardId);
-        if (selectedSectionId) params.append('section_id', selectedSectionId);
-        if (studentSearchText) params.append('search', studentSearchText);
-
-        fetch(`${API_URL}/api/adminServices/students/all?${params.toString()}`, {
-            headers: { Authorization: `Bearer ${authToken}` }
-        })
-        .then(res => res.json())
-        .then(res => {
-
-            const rows = res.data.students.map(s => ({
-                id: s.id,
-                reg_no: s.registration_number,
-                name: s.name,
-                dob: formatDate(s.dob),
-                parent_name: s.parent_name,
-                phone: s.parent_phone ?? '-',
-                grade_section: `${s.standard_name} - ${s.section_name}`
-            }));
-
-            callback({
-                draw: data.draw,
-                recordsTotal: res.data.pagination.total_records,
-                recordsFiltered: res.data.pagination.total_records,
-                data: rows
-            });
-        })
-        .catch(() => callback({
-            draw: data.draw,
-            recordsTotal: 0,
-            recordsFiltered: 0,
-            data: []
-        }));
-    },
-
-    columns: [
-        { data: "reg_no", title: "Reg No" },
-        { data: "name", title: "Student Name" },
-        { data: "dob", title: "DOB" },
-        { data: "parent_name", title: "Parent Name" },
-        { data: "phone", title: "Phone" },
-        { data: "grade_section", title: "Grade / Section" }
-    ],
-
-    /* ===== Make entire row clickable ===== */
-    rowCallback: function (row, data) {
-        $(row)
-            .css('cursor', 'pointer')
-            .off('click')
-           .on('click', function () {
-                window.open(`/student-details.html?regid=${data.id}`, '_blank');
-            });
-    }
-});
-
-/* ================= SELECTRIC HELPERS ================= */
-function destroySelectric($el) {
-    if ($el.data('selectric')) {
-        $el.selectric('destroy');
-    }
-}
-
-/* ================= INIT STANDARD ================= */
-$('#standardSelect').selectric({
-    disableOnMobile: false,
-    nativeOnMobile: false
-});
-
-/* ================= LOAD STANDARDS ================= */
-function loadStandards() {
-    fetch(`${API_URL}/api/adminServices/standards`, {
-        headers: { Authorization: `Bearer ${authToken}` }
-    })
-    .then(res => res.json())
-    .then(res => {
-
-        standardsData = res.data || [];
-
-        let html = `<option value="">Select Standard</option>`;
-        standardsData.forEach(s => {
-            html += `<option value="${s.id}">${s.name}</option>`;
-        });
-
-        $('#standardSelect').html(html).selectric('refresh');
-        resetSection();
-    });
-}
-
-/* ================= RESET SECTION ================= */
-function resetSection() {
-    const $sec = $('#sectionSelect');
-    destroySelectric($sec);
-    $sec.hide().html(`<option value="">Select Section</option>`);
-    selectedSectionId = '';
-}
-
-/* ================= STANDARD CHANGE ================= */
-$('#standardSelect').on('change', function () {
-
-    selectedStandardId = this.value || '';
-    resetSection();
-
-    if (!selectedStandardId) {
-        studentTable.ajax.reload();
-        return;
-    }
-
-    const std = standardsData.find(s => s.id == selectedStandardId);
-    if (!std || !std.sections) return;
-
-    let html = `<option value="">Select Section</option>`;
-    std.sections.forEach(sec => {
-        html += `<option value="${sec.id}">${sec.name}</option>`;
-    });
-
-    const $sec = $('#sectionSelect');
-    $sec.html(html).show();
-
-    if ($sec.find('option').length > 1) {
-        $sec.selectric({
-            disableOnMobile: false,
-            nativeOnMobile: false
-        });
-    }
-
-    studentTable.ajax.reload();
-});
-
-/* ================= SECTION CHANGE ================= */
-$(document).on('change', '#sectionSelect', function () {
-    selectedSectionId = this.value || '';
-    studentTable.ajax.reload();
-});
-
-/* ================= SEARCH (LIVE) ================= */
-let searchTimer = null;
-$('#searchStudent').on('input', function () {
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => {
-        studentSearchText  = this.value.trim();
-        studentTable.ajax.reload();
-    }, 300); // debounce
-});
-
-/* ================= INIT ================= */
-loadStandards();
 
 
-/* ================= ADD STUDENT FORM ================= */
-document.getElementById("addStudentBtn").addEventListener("click", function () {
-    const firstName = document.getElementById("fName").value.trim();
-    const lastName  = document.getElementById("lName").value.trim();
-    const email     = document.getElementById("stuEmail").value.trim();
-    const city      = document.getElementById("stuCity").value.trim();
-    $(this).addClass('disabled')
-    // Combine name (ONLY required field)
-    const name = `${firstName} ${lastName}`.trim();
 
-    if (!firstName) {
-        showToast('Name is required', 'error');
-        return;
-    }
 
-    const payload = {
-        name: name,
-        admission_no: "",
-        city: city || "",
-        email: email || ""
-    };
-
-    fetch(`${API_URL}/api/adminServices/students`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization":  `Bearer ${authToken}` // if required
-        },
-        body: JSON.stringify(payload)
-    })
-
-    .then(res => res.json())
-    .then(response => {
-        if (response.status) {
-            showToast(response.message);
-            document.getElementById("studentForm").reset();
-            setTimeout(()=>{
-                location.reload();
-            },3000)
-        } else {
-            showToast(response.message, 'error');
-        }
-    })
-    .catch(error => {
-        console.error(error);
-        alert("API Error");
-    });
-});
 
 /*************************
  * Teachers Page
  *************************/
+    let selectedStandardId = '';
+    let selectedSectionId = '';
+    let studentSearchText = '';
+    const pageLimit = 10;
 
 /* ================= DATATABLE ================= */
 let teacherSearchText = '';
@@ -851,6 +634,7 @@ $(document).on('input', '#searchTeacher', function () {
         teacherTable.ajax.reload();
     }, 300);
 });
+
 
 
 /*************************
