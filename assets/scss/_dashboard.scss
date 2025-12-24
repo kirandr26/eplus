@@ -291,7 +291,7 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
     margin-bottom: 32px;
     &_cal{
         position: relative;
@@ -422,9 +422,11 @@
     }
     .leaveSection{
         position: relative; 
-        margin-bottom: 30px;
         padding-top: 0;
         ul{
+            position: relative;
+            max-height: 250px;
+            overflow: auto;
             li{
                 position: relative;
                 padding: 12px;
