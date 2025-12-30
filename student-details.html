@@ -292,6 +292,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <h4 class="formSectionTitle">Attendance Details</h4>
+                            <table id="attendanceTable" class="mTable"></table>
                         </div>
 
                         <div class="tab-pane fade" id="marks">
@@ -544,10 +546,18 @@
     /*************************
      * FETCH Attendence Details
      *************************/
+    
+/* ===== Academic Year Resolver ===== */
+function getAcademicYear(month) {
+    const currentYear = new Date().getFullYear();
+    const academicStartMonth = 6; // June
+    return month < academicStartMonth ? currentYear + 1 : currentYear;
+}
+
+/* ===== Fetch Attendance ===== */
     function fetchAttendance(month) {
 
         const user = JSON.parse(localStorage.getItem("user"));
-
         if (!user || !user.id) {
             showToast("User not found", "error");
             return;
@@ -555,46 +565,91 @@
 
         const studentId = user.id;
 
-        /* ===== Academic Year Logic =====
-        Adjust this if your academic year is different */
-        const academicYear = 2024;
+        const currentYear = new Date().getFullYear();
+        const academicStartMonth = 6;
+        const academicYear = month < academicStartMonth ? currentYear + 1 : currentYear;
 
-        // Get start & end dates
         const startDate = `${academicYear}-${month}-01`;
         const lastDay = new Date(academicYear, month, 0).getDate();
         const endDate = `${academicYear}-${month}-${lastDay}`;
 
-        $.ajax({
-            url: `${API_URL}/api/faculty/attendance/student/${studentId}?start_date=${startDate}&end_date=${endDate}`,
-            type: "GET",
-            headers: {
-                Authorization: `Bearer ${authToken}`
+        $('#attendanceTable').DataTable({
+            destroy: true,
+            paging: false,
+            searching: false,
+            ordering: false,
+            info: false,
+            processing: true,
+
+            ajax: function (data, callback) {
+
+                $.ajax({
+                    url: `${API_URL}/api/faculty/attendance/student/${studentId}?start_date=${startDate}&end_date=${endDate}`,
+                    type: "GET",
+                    headers: { Authorization: `Bearer ${authToken}` },
+
+                    success: function (res) {
+
+                        if (!res || !res.data) {
+                            callback({ draw: data.draw, recordsTotal: 0, recordsFiltered: 0, data: [] });
+                            return;
+                        }
+
+                        const d = res.data;
+
+                        /* ===== SUMMARY ===== */
+                        $("#stuName").text(d.student_name || "-");
+                        $("#stuClass").text(`${d.standard_name} - ${d.section_name}`);
+                        $("#totalDays").text(d.total_days ?? 0);
+                        $("#presentDays").text(d.total_present ?? 0);
+                        $("#absentDays").text(d.total_absent ?? 0);
+                        $("#attendanceRate").text(`${(d.attendance_rate ?? 0).toFixed(2)}%`);
+
+                        /* ===== TABLE DATA ===== */
+                        const rows = (d.records || []).map(r => ({
+                            date: r.date.split('T')[0],
+                            status: r.status,
+                            marked_by: r.marked_by === 0 ? 'System' : r.marked_by,
+                            time: r.timestamp
+                                ? new Date(r.timestamp).toLocaleTimeString()
+                                : '-'
+                        }));
+
+                        callback({
+                            draw: data.draw,
+                            recordsTotal: rows.length,
+                            recordsFiltered: rows.length,
+                            data: rows
+                        });
+                    },
+
+                    error: function () {
+                        showToast("Failed to fetch attendance", "error");
+                        callback({ draw: data.draw, recordsTotal: 0, recordsFiltered: 0, data: [] });
+                    }
+                });
             },
-            success: function (res) {
 
-                if (!res || !res.data) {
-                    showToast("Attendance data not found", "error");
-                    return;
-                }
-
-                const d = res.data;
-                console.log(d, 'dddd')
-                /* ===== STUDENT INFO ===== */
-                $("#stuName").text(d.student_name || "-");
-                $("#stuClass").text(`${d.standard_name || ""} - ${d.section_name || ""}`);
-
-                /* ===== ATTENDANCE COUNTS ===== */
-                $("#totalDays").text(d.total_days ?? 0);
-                $("#presentDays").text(d.total_present ?? 0);
-                $("#absentDays").text(d.total_absent ?? 0);
-                $("#attendanceRate").text(`${d.attendance_rate ?? 0}%`);
-            },
-
-            error: function () {
-                showToast("Failed to fetch attendance", "error");
-            }
+            columns: [
+                { data: "date", title: "Date" },
+                {
+                    data: "status",
+                    title: "Status",
+                    render: data => {
+                        const cls =
+                            data === 'present' ? 'bg-success' :
+                            data === 'absent' ? 'bg-danger' :
+                            data === 'leave' ? 'bg-info' :
+                            'bg-warning';
+                        return `<span class="badge ${cls}">${data}</span>`;
+                    }
+                },
+                { data: "marked_by", title: "Marked By" },
+                { data: "time", title: "Time" }
+            ]
         });
     }
+
 
     $('#standardClassSelect').on('change', function () {
         const month = $(this).val();

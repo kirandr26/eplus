@@ -464,11 +464,14 @@ div.dt-container div.dt-layout-row{
         }
     }
 }
-.dt-empty{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+table.dataTable td.dt-type-date,table.dataTable th.dt-type-date{
+    text-align: left !important;
 }
+// .dt-empty{
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
 
 // Progress bar
 .progressWrap{
