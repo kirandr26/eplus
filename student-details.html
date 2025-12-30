@@ -14,158 +14,246 @@
 <body>
     <div class="page_wrap">
         <div id="toastContainer"></div>
-    <div class="eContainer">
-        <div class="sideBar"></div>
+        <div class="eContainer">
+            <div class="sideBar"></div>
 
-        <div class="mainArticle">
-            <h1 class="pageTitle mb-4">Student Details</h1>
+            <div class="mainArticle">
+                <h1 class="pageTitle mb-4">Student Details</h1>
 
-            <div class="fullWidthForm">
-                <form id="studentForm">
-                    <div class="formInner">
+                <div class="fullWidthForm">
+                    <form id="studentForm">
+                        <div class="formInner">
 
-                        <!-- ================= PERSONAL DETAILS ================= -->
-                        <h4 class="formSectionTitle">Personal Details</h4>
+                            <!-- ================= TABS ================= -->
+                            <ul class="nav nav-tabs mb-3">
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" data-bs-toggle="tab" data-bs-target="#details">
+                            Details
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#fees">
+                            Fees
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#attendance">
+                            Attendance
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#marks">
+                            Marks
+                        </button>
+                    </li>
+                </ul>
 
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="text" id="name" placeholder="Student Name" readonly>
+
+                    <div class="tab-content">
+
+                        <!-- ================= DETAILS TAB ================= -->
+                        <div class="tab-pane fade show active" id="details">
+
+                            <!-- ================= PERSONAL DETAILS ================= -->
+                            <h4 class="formSectionTitle">Personal Details</h4>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="text" id="name" placeholder="Student Name" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="text" id="registration_number" placeholder="Registration Number" readonly>
+                                </div>
                             </div>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="text" id="admission_no" placeholder="Admission No" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="date" id="dob" readonly>
+                                </div>
+                            </div>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="text" id="gender" placeholder="Gender" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="text" id="blood_group" placeholder="Blood Group" readonly>
+                                </div>
+                            </div>
+
                             <div class="inputWrap">
-                                <input type="text" id="registration_number" placeholder="Registration Number" readonly>
+                                <input type="email" id="email" placeholder="Email" readonly>
+                            </div>
+
+                            <div class="inputWrap">
+                                <input type="text" id="city" placeholder="Class / City" readonly>
+                            </div>
+
+                            <!-- ================= PARENT DETAILS ================= -->
+                            <h4 class="formSectionTitle">Parent / Guardian Details</h4>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="text" id="parent_name" placeholder="Parent Name" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="text" id="parent_phone" placeholder="Parent Phone" readonly>
+                                </div>
+                            </div>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="text" id="parent_occupation" placeholder="Parent Occupation" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="number" id="parent_income" placeholder="Parent Income" readonly>
+                                </div>
+                            </div>
+
+                            <!-- ================= SCHOOL DETAILS ================= -->
+                            <h4 class="formSectionTitle">School Details</h4>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="text" id="standard_id" placeholder="Standard ID" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="text" id="section_id" placeholder="Section ID" readonly>
+                                </div>
+                            </div>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="text" id="standard_name" placeholder="Standard Name" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="text" id="section_name" placeholder="Section Name" readonly>
+                                </div>
+                            </div>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="date" id="admission_date" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="text" id="previous_school" placeholder="Previous School" readonly>
+                                </div>
+                            </div>
+
+                            <!-- ================= OTHER DETAILS ================= -->
+                            <h4 class="formSectionTitle">Other Details</h4>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="text" id="aadhaar_no" placeholder="Aadhaar Number" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="text" id="medium" placeholder="Medium" readonly>
+                                </div>
+                            </div>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="text" id="religion" placeholder="Religion" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="text" id="category" placeholder="Category" readonly>
+                                </div>
+                            </div>
+
+                            <div class="inputWrap">
+                                <textarea id="address" placeholder="Address" readonly></textarea>
+                            </div>
+
+                            <div class="inputWrap">
+                                <textarea id="medical_history" placeholder="Medical History" readonly></textarea>
+                            </div>
+
+                            <div class="formInputWrap">
+                                <div class="inputWrap">
+                                    <input type="text" id="special_needs" placeholder="Special Needs" readonly>
+                                </div>
+                                <div class="inputWrap">
+                                    <input type="text" id="status" placeholder="Status" readonly>
+                                </div>
+                            </div>
+
+                            <!-- ================= ACTIONS ================= -->
+                            <div class="inputWrap btnWrap d-flex gap-2">
+                                <button type="button" class="mBtn" id="editBtn">Edit</button>
+                                <button type="button" class="mBtn d-none" id="updateBtn">Update</button>
+                                <button type="button" class="mBtn dangerBtn" id="deleteBtn">Delete</button>
+                            </div>
+
+                        </div>
+
+                        <!-- ================= DUMMY TABS ================= -->
+                        <div class="tab-pane fade" id="fees">
+                            <div class="cardsWrap">
+                              <h4 class="formSectionTitle">Payment Progress</h4>
+                                <div class="cardsWrap_inner">
+                                    <div class="cardsWrap_item">
+                                        <div class="cardsWrap_item_details">
+                                            <p>Total Amount</p>
+                                            <h2 id="totalAmount">0</h2>
+                                        </div>
+                                    </div>
+                                    <div class="cardsWrap_item">
+                                        <div class="cardsWrap_item_details">
+                                            <p>Paid</p>
+                                            <h2 id="feesPaid">0</h2>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="cardsWrap_item">
+                                        <div class="cardsWrap_item_details">
+                                            <p>Pending</p>
+                                            <h2 id="feesPending">0</h2>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="cardsWrap_item">
+                                        <div class="cardsWrap_item_details">
+                                            <p>Concession</p>
+                                            <h2 id="feesConcession">0</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <h4 class="formSectionTitle">Overall Payment Completion</h4>
+                             <div class="progressWrap">
+                                <div class="progressWrap_outer">
+                                    <div class="progressWrap_inner" id="progressBarInner">
+                                        <p id="paymentPercentage"></p>
+                                    </div>
+                                </div>
+                             </div>
+                            <h4 class="formSectionTitle">Payment Details</h4>
+                            <div class="feeTermsTable fTable fhTable">
+                                <table id="feeTermsTable" class="mTable"></table>
                             </div>
                         </div>
 
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="text" id="admission_no" placeholder="Admission No" readonly>
-                            </div>
-                            <div class="inputWrap">
-                                <input type="date" id="dob" readonly>
-                            </div>
+                        <div class="tab-pane fade" id="attendance">
+                            <p>Attendance details will appear here.</p>
                         </div>
 
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="text" id="gender" placeholder="Gender" readonly>
-                            </div>
-                            <div class="inputWrap">
-                                <input type="text" id="blood_group" placeholder="Blood Group" readonly>
-                            </div>
-                        </div>
-
-                        <div class="inputWrap">
-                            <input type="email" id="email" placeholder="Email" readonly>
-                        </div>
-
-                        <div class="inputWrap">
-                            <input type="text" id="city" placeholder="Class / City" readonly>
-                        </div>
-
-                        <!-- ================= PARENT DETAILS ================= -->
-                        <h4 class="formSectionTitle">Parent / Guardian Details</h4>
-
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="text" id="parent_name" placeholder="Parent Name" readonly>
-                            </div>
-                            <div class="inputWrap">
-                                <input type="text" id="parent_phone" placeholder="Parent Phone" readonly>
-                            </div>
-                        </div>
-
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="text" id="parent_occupation" placeholder="Parent Occupation" readonly>
-                            </div>
-                            <div class="inputWrap">
-                                <input type="number" id="parent_income" placeholder="Parent Income" readonly>
-                            </div>
-                        </div>
-
-                        <!-- ================= SCHOOL DETAILS ================= -->
-                        <h4 class="formSectionTitle">School Details</h4>
-
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="text" id="standard_id" placeholder="Standard ID" readonly>
-                            </div>
-                            <div class="inputWrap">
-                                <input type="text" id="section_id" placeholder="Section ID" readonly>
-                            </div>
-                        </div>
-
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="text" id="standard_name" placeholder="Standard Name" readonly>
-                            </div>
-                            <div class="inputWrap">
-                                <input type="text" id="section_name" placeholder="Section Name" readonly>
-                            </div>
-                        </div>
-
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="date" id="admission_date" readonly>
-                            </div>
-                            <div class="inputWrap">
-                                <input type="text" id="previous_school" placeholder="Previous School" readonly>
-                            </div>
-                        </div>
-
-                        <!-- ================= OTHER DETAILS ================= -->
-                        <h4 class="formSectionTitle">Other Details</h4>
-
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="text" id="aadhaar_no" placeholder="Aadhaar Number" readonly>
-                            </div>
-                            <div class="inputWrap">
-                                <input type="text" id="medium" placeholder="Medium" readonly>
-                            </div>
-                        </div>
-
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="text" id="religion" placeholder="Religion" readonly>
-                            </div>
-                            <div class="inputWrap">
-                                <input type="text" id="category" placeholder="Category" readonly>
-                            </div>
-                        </div>
-
-                        <div class="inputWrap">
-                            <textarea id="address" placeholder="Address" readonly></textarea>
-                        </div>
-
-                        <div class="inputWrap">
-                            <textarea id="medical_history" placeholder="Medical History" readonly></textarea>
-                        </div>
-
-                        <div class="formInputWrap">
-                            <div class="inputWrap">
-                                <input type="text" id="special_needs" placeholder="Special Needs" readonly>
-                            </div>
-                            <div class="inputWrap">
-                                <input type="text" id="status" placeholder="Status" readonly>
-                            </div>
-                        </div>
-
-                        <!-- ================= ACTIONS ================= -->
-                        <div class="inputWrap btnWrap d-flex gap-2">
-                            <button type="button" class="mBtn" id="editBtn">Edit</button>
-                            <button type="button" class="mBtn mBtn_medium d-none" id="updateBtn">Update</button>
-                            <button type="button" class="mBtn dangerBtn" id="deleteBtn">Delete</button>
+                        <div class="tab-pane fade" id="marks">
+                            <p>Marks details will appear here.</p>
                         </div>
 
                     </div>
-                </form>
+                </div>
+            </form>
+        </div>
+
+
             </div>
-
-
         </div>
     </div>
-</div>
 <!-- Modal -->
      <div class="modal fade" id="stuDeleteModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -182,7 +270,7 @@
                             <input type="text" id="delText" placeholder="Please Enter" autocomplete="off">
                         </div>
                         <div class="inputWrap btnWrap mt-4 flexEnd">
-                            <button type="button" class="mBtn mBtn_medium dangerBtn" id="addStudentDeleteBtn">Confirm</button>
+                            <button type="button" class="mBtn dangerBtn" id="addStudentDeleteBtn">Confirm</button>
                         </div>
                     </form>
                 </div>
@@ -226,6 +314,9 @@
     $(document).ready(function () {
         fetchStudent();
     });
+    $('button[data-bs-target="#fees"]').on('shown.bs.tab', function () {
+        fetchFeeDetails();
+    });
 
     /*************************
      * FETCH STUDENT
@@ -265,6 +356,128 @@
             }
         });
     }
+
+     /*************************
+     * FETCH FEE Details
+     *************************/
+    function fetchFeeDetails() {
+
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (!user || !user.id) {
+            showToast("User not found in localStorage", "error");
+            return;
+        }
+
+        const studentId = user.id;
+        const academicYearId = 1;
+
+        $('#feeTermsTable').DataTable({
+            destroy: true,
+            processing: true,
+            paging: false,
+            searching: false,
+            ordering: false,
+            info: false,
+
+            ajax: function (data, callback) {
+
+                $.ajax({
+                    url: `${API_URL}/api/adminServices/student-fees/${studentId}?academic_year_id=${academicYearId}`,
+                    type: "GET",
+                    headers: {
+                        Authorization: `Bearer ${authToken}`
+                    },
+                    success: function (res) {
+
+                        if (!res || !res.data) {
+                            showToast("Fee details not found", "error");
+                            callback({
+                                draw: data.draw,
+                                recordsTotal: 0,
+                                recordsFiltered: 0,
+                                data: []
+                            });
+                            return;
+                        }
+
+                        const summary = res.data.summary;
+                        const terms = res.data.terms;
+
+                        /* ================= SUMMARY ================= */
+                        $("#totalAmount").text((summary.total_amount ?? 0).toFixed(2));
+                        $("#feesPaid").text((summary.total_paid ?? 0).toFixed(2));
+                        $("#feesPending").text((summary.total_pending ?? 0).toFixed(2));
+                        $("#feesConcession").text((summary.total_concession ?? 0).toFixed(2));
+
+                        if (summary.payment_percentage > 0) {
+                            $("#paymentPercentage").text(`${summary.payment_percentage}%`);
+                        } else {
+                            $("#paymentPercentage").text("0%");
+                        }
+
+                        $('#progressBarInner')
+                            .css('width', `${summary.payment_percentage ?? 0}%`);
+
+                        /* ================= MAP TERMS ================= */
+                        const rows = terms.map((t, index) => ({
+                            sno: index + 1,
+                            term_name: t.term_name,
+                            amount: t.amount,
+                            paid: t.paid,
+                            concession: t.concession,
+                            pending: t.pending,
+                            status: t.status,
+                            payment_date: t.payment_date ?? "-",
+                            payment_mode: t.payment_mode ?? "-",
+                            transaction_id: t.transaction_id ?? "-"
+                        }));
+
+                        callback({
+                            draw: data.draw,
+                            recordsTotal: rows.length,
+                            recordsFiltered: rows.length,
+                            data: rows
+                        });
+                    },
+
+                    error: function () {
+                        showToast("Failed to fetch fee details", "error");
+                        callback({
+                            draw: data.draw,
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
+                    }
+                });
+            },
+
+            columns: [
+                { data: "sno", title: "#" },
+                { data: "term_name", title: "Term" },
+                { data: "amount", title: "Amount" },
+                { data: "paid", title: "Paid" },
+                { data: "concession", title: "Concession" },
+                { data: "pending", title: "Pending" },
+                {
+                    data: "status",
+                    title: "Status",
+                    render: function (data) {
+                        return `
+                            <span class="badge ${data === 'paid' ? 'bg-success' : 'bg-warning'}">
+                                ${data}
+                            </span>`;
+                    }
+                },
+                { data: "payment_date", title: "Payment Date" },
+                { data: "payment_mode", title: "Mode" },
+                { data: "transaction_id", title: "Txn ID" }
+            ]
+        });
+    }
+
+
 
     /*************************
      * ENABLE EDIT
