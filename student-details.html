@@ -548,10 +548,29 @@
      *************************/
     
 /* ===== Academic Year Resolver ===== */
-function getAcademicYear(month) {
-    const currentYear = new Date().getFullYear();
-    const academicStartMonth = 6; // June
-    return month < academicStartMonth ? currentYear + 1 : currentYear;
+function getAcademicYearForMonth(month) {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth() + 1; // 1–12
+
+    // Determine academic year start
+    let academicStartYear;
+
+    if (currentMonth >= 6) {
+        // We are in Jun–Dec → academic year started this year
+        academicStartYear = currentYear;
+    } else {
+        // We are in Jan–May → academic year started last year
+        academicStartYear = currentYear - 1;
+    }
+
+    // If selected month is Jan–May → next calendar year
+    if (month <= 5) {
+        return academicStartYear + 1;
+    }
+
+    // If selected month is Jun–Dec → academic start year
+    return academicStartYear;
 }
 
 /* ===== Fetch Attendance ===== */
@@ -564,14 +583,14 @@ function getAcademicYear(month) {
         }
 
         const studentId = user.id;
+        month = parseInt(month);
 
-        const currentYear = new Date().getFullYear();
-        const academicStartMonth = 6;
-        const academicYear = month < academicStartMonth ? currentYear + 1 : currentYear;
+        /* ===== FIXED ACADEMIC YEAR (Jun → May) ===== */
+        const academicYear = getAcademicYearForMonth(month);
 
-        const startDate = `${academicYear}-${month}-01`;
+        const startDate = `${academicYear}-${String(month).padStart(2, '0')}-01`;
         const lastDay = new Date(academicYear, month, 0).getDate();
-        const endDate = `${academicYear}-${month}-${lastDay}`;
+        const endDate = `${academicYear}-${String(month).padStart(2, '0')}-${lastDay}`;
 
         $('#attendanceTable').DataTable({
             destroy: true,
@@ -605,7 +624,7 @@ function getAcademicYear(month) {
                         $("#absentDays").text(d.total_absent ?? 0);
                         $("#attendanceRate").text(`${(d.attendance_rate ?? 0).toFixed(2)}%`);
 
-                        /* ===== TABLE DATA ===== */
+                        /* ===== TABLE ===== */
                         const rows = (d.records || []).map(r => ({
                             date: r.date.split('T')[0],
                             status: r.status,
