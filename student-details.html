@@ -190,7 +190,7 @@
 
                         </div>
 
-                        <!-- ================= DUMMY TABS ================= -->
+                        <!-- ================= FEES TABS ================= -->
                         <div class="tab-pane fade" id="fees">
                             <div class="cardsWrap">
                               <h4 class="formSectionTitle">Payment Progress</h4>
@@ -238,7 +238,60 @@
                         </div>
 
                         <div class="tab-pane fade" id="attendance">
-                            <p>Attendance details will appear here.</p>
+                            <div class="cardsWrap">
+                              <h4 class="formSectionTitle">Attendance Details</h4>
+                                <div class="attendenceDetailsWrap">
+                                    <div class="stuDetails">
+                                        <h4 id="stuName"></h4>
+                                        <p id="stuClass"></p>
+                                    </div>
+                                    <div class="stuDetails_filters selectWrap">
+                                        <select id="standardClassSelect">
+                                            <option value="">Select Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="cardsWrap_inner">
+                                    <div class="cardsWrap_item">
+                                        <div class="cardsWrap_item_details">
+                                            <p>Total Days</p>
+                                            <h2 id="totalDays">0</h2>
+                                        </div>
+                                    </div>
+                                    <div class="cardsWrap_item">
+                                        <div class="cardsWrap_item_details">
+                                            <p>Present</p>
+                                            <h2 id="presentDays">0</h2>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="cardsWrap_item">
+                                        <div class="cardsWrap_item_details">
+                                            <p>Absent</p>
+                                            <h2 id="absentDays">0</h2>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="cardsWrap_item">
+                                        <div class="cardsWrap_item_details">
+                                            <p>Attendance Rate</p>
+                                            <h2 id="attendanceRate">0</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="marks">
@@ -313,9 +366,19 @@
      *************************/
     $(document).ready(function () {
         fetchStudent();
+         /* ================= INIT STANDARD ================= */
+        $('#standardClassSelect').selectric({
+            disableOnMobile: false,
+            nativeOnMobile: false
+        });
     });
     $('button[data-bs-target="#fees"]').on('shown.bs.tab', function () {
         fetchFeeDetails();
+    });
+
+    $('button[data-bs-target="#attendance"]').on('shown.bs.tab', function () {
+        const currentMonth = String(new Date().getMonth() + 1).padStart(2, '0');
+        $('#standardClassSelect').val(currentMonth).trigger('change');
     });
 
     /*************************
@@ -476,6 +539,68 @@
             ]
         });
     }
+
+
+    /*************************
+     * FETCH Attendence Details
+     *************************/
+    function fetchAttendance(month) {
+
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (!user || !user.id) {
+            showToast("User not found", "error");
+            return;
+        }
+
+        const studentId = user.id;
+
+        /* ===== Academic Year Logic =====
+        Adjust this if your academic year is different */
+        const academicYear = 2024;
+
+        // Get start & end dates
+        const startDate = `${academicYear}-${month}-01`;
+        const lastDay = new Date(academicYear, month, 0).getDate();
+        const endDate = `${academicYear}-${month}-${lastDay}`;
+
+        $.ajax({
+            url: `${API_URL}/api/faculty/attendance/student/${studentId}?start_date=${startDate}&end_date=${endDate}`,
+            type: "GET",
+            headers: {
+                Authorization: `Bearer ${authToken}`
+            },
+            success: function (res) {
+
+                if (!res || !res.data) {
+                    showToast("Attendance data not found", "error");
+                    return;
+                }
+
+                const d = res.data;
+                console.log(d, 'dddd')
+                /* ===== STUDENT INFO ===== */
+                $("#stuName").text(d.student_name || "-");
+                $("#stuClass").text(`${d.standard_name || ""} - ${d.section_name || ""}`);
+
+                /* ===== ATTENDANCE COUNTS ===== */
+                $("#totalDays").text(d.total_days ?? 0);
+                $("#presentDays").text(d.total_present ?? 0);
+                $("#absentDays").text(d.total_absent ?? 0);
+                $("#attendanceRate").text(`${d.attendance_rate ?? 0}%`);
+            },
+
+            error: function () {
+                showToast("Failed to fetch attendance", "error");
+            }
+        });
+    }
+
+    $('#standardClassSelect').on('change', function () {
+        const month = $(this).val();
+        if (!month) return;
+        fetchAttendance(month);
+    });
 
 
 

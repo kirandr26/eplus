@@ -498,3 +498,23 @@ div.dt-container div.dt-layout-row{
         }
     }
 }
+.attendenceDetailsWrap{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    .stuDetails{
+        h4{
+            font-size: 16px;
+            line-height: 26px;
+            font-weight: 560;
+            margin-bottom: 8px;
+            color: $darkBlack;
+        }
+        p{
+            font-size: 14px;
+            line-height: 24px;
+        }
+    }
+}
