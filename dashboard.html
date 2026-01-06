@@ -104,27 +104,7 @@
                             <div class="sectionWrap">
                                 <h3>Faculties on Leave</h3>
                             </div>
-                            <ul>
-                                <li>
-                                    <p>Dr. Priya Sharma</p>
-                                    <small>FAC215</small>
-                                    <i>Sick Leave</i>
-                                </li>
-                                <li>
-                                    <p>Mr. Amit Patel</p>
-                                    <small>FAC215</small>
-                                    <i class="cl">Casual Leave</i>
-                                </li>
-                                <li>
-                                    <p>Dr. Neha Desai</p>
-                                    <small>FAC215</small>
-                                    <i class="ul">Upcoming Leave - Dec 24</i>
-                                </li>
-                                <li>
-                                    <p>Mr. Ravi Kumar</p>
-                                    <small>FAC215</small>
-                                    <i class="al">Annual Leave</i>
-                                </li>
+                            <ul id="leaveList">
                             </ul>
                         </div>
                     </div>
@@ -262,6 +242,69 @@
             disableOnMobile: false,
             nativeOnMobile: false
         });
+
+        $(document).ready(function(){
+            const academicYearId = 1;
+            function getLeaveClass(type) {
+                switch (type.toLowerCase()) {
+                    case 'sick leave':
+                        return '';
+                    case 'casual leave':
+                        return 'cl';
+                    case 'annual leave':
+                    case 'earned leave':
+                        return 'al';
+                    default:
+                        return '';
+                }
+            }
+
+            function formatDate(dateStr) {
+                const d = new Date(dateStr);
+                return d.toLocaleDateString('en-IN', {
+                    day: '2-digit',
+                    month: 'short'
+                });
+            }
+            $.ajax({
+                url: `${API_URL}/api/adminServices/faculty/leave-details?academic_year_id=${academicYearId}`,
+                type: "GET",
+                headers: {
+                    "Authorization": `Bearer ${authToken}`
+                },
+                success: function (res) {
+
+                    if (!res.status || !res.data.length) {
+                        $("#leaveList").html("<li>No leave records found</li>");
+                        return;
+                    }
+
+                    let html = "";
+
+                    res.data.forEach(item => {
+                        const cls = getLeaveClass(item.leave_type);
+
+                        let leaveText = item.leave_type;
+                        if (item.category === "upcoming") {
+                            leaveText = `Upcoming Leave - ${formatDate(item.leave_date)}`;
+                        }
+
+                        html += `
+                            <li>
+                                <p>${item.faculty_name}</p>
+                                <small>${item.employee_id}</small>
+                                <i class="${cls}">${item.leave_type}</i>
+                            </li>
+                        `;
+                    });
+
+                    $("#leaveList").html(html);
+                },
+                error: function () {
+                    $("#leaveList").html("<li>Error loading leave data</li>");
+                }
+            });
+        })
     </script>
    
 
