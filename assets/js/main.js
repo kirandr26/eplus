@@ -598,9 +598,10 @@ const teacherTable = new DataTable('#teachersTable', {
         })
         .then(res => res.json())
         .then(res => {
-
+            console.log(res)
            const rows = res.data.faculties.map(f => ({
                 emp_id: f.employee_id ?? '-',
+                id: f.id,
                 name: f.name ?? '-',
                 designation: f.designation ?? '-',   // ✅ FIX
                 phone: f.phone ?? '-',
@@ -658,7 +659,7 @@ const teacherTable = new DataTable('#teachersTable', {
             .css('cursor', 'pointer')
             .off('click')
             .on('click', function () {
-                window.location.href = `/teacher-details.html?empid=${data.emp_id}`;
+                window.location.href = `/faculty-details.html?empid=${data.id}`;
             });
     }
 });

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ePlus</title>
+    <link rel="stylesheet" href="./assets/css/selectric.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+<body>
+    <div class="page_wrap">
+        <div id="toastContainer"></div>
+        <div class="eContainer">
+            <div class="sideBar"></div>
+
+            <div class="mainArticle">
+               <h1 class="pageTitle mb-4">Faculty Details</h1>
+
+                <div class="fullWidthForm">
+                    <form id="facultyForm">
+                    <div class="formInner">
+
+                        <!-- ================= TABS ================= -->
+                        <ul class="nav nav-tabs mb-3">
+                            <li class="nav-item">
+                                <button type="button" class="nav-link active" data-bs-toggle="tab" data-bs-target="#facultyDetails">
+                                    Details
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button type="button" class="nav-link" data-bs-toggle="tab" data-bs-target="#facultyPayroll">
+                                    Payroll
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+
+                            <!-- ================= DETAILS TAB ================= -->
+                            <div class="tab-pane fade show active" id="facultyDetails">
+
+                                <!-- ===== PERSONAL DETAILS ===== -->
+                                <h4 class="formSectionTitle">Personal Details</h4>
+
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="text" id="name" placeholder="Faculty Name" readonly>
+                                    </div>
+                                    <div class="inputWrap">
+                                        <input type="text" id="employee_id" placeholder="Employee ID" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="text" id="registration_number" placeholder="Registration Number" readonly>
+                                    </div>
+                                    <div class="inputWrap">
+                                        <input type="text" id="designation" placeholder="Designation" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="email" id="email" placeholder="Email" readonly>
+                                    </div>
+                                    <div class="inputWrap">
+                                        <input type="text" id="phone" placeholder="Phone" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="date" id="dob" readonly>
+                                    </div>
+                                    <div class="inputWrap">
+                                        <input type="text" id="gender" placeholder="Gender" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="inputWrap">
+                                    <textarea id="address" placeholder="Address" readonly></textarea>
+                                </div>
+
+                                <!-- ===== PROFESSIONAL DETAILS ===== -->
+                                <h4 class="formSectionTitle">Professional Details</h4>
+
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="date" id="joining_date" readonly>
+                                    </div>
+                                    <div class="inputWrap">
+                                        <input type="number" id="experience_years" placeholder="Experience (Years)" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="text" id="qualifications" placeholder="Qualifications" readonly>
+                                    </div>
+                                    <div class="inputWrap">
+                                        <input type="text" id="subjects" placeholder="Subjects" readonly>
+                                    </div>
+                                </div>
+
+                                <!-- ===== IDENTIFICATION ===== -->
+                                <h4 class="formSectionTitle">Identification</h4>
+
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="text" id="aadhaar_no" placeholder="Aadhaar Number" readonly>
+                                    </div>
+                                    <div class="inputWrap">
+                                        <input type="text" id="pan_number" placeholder="PAN Number" readonly>
+                                    </div>
+                                </div>
+
+                                <!-- ===== STATUS ===== -->
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="text" id="status" placeholder="Status" readonly>
+                                    </div>
+                                </div>
+
+                                <!-- ===== ACTIONS ===== -->
+                                <div class="inputWrap btnWrap d-flex gap-2">
+                                    <button type="button" class="mBtn" id="editBtn">Edit</button>
+                                    <button type="button" class="mBtn d-none" id="updateBtn">Update</button>
+                                    <button type="button" class="mBtn dangerBtn" id="deleteBtn">Delete</button>
+                                </div>
+
+                            </div>
+
+                            <!-- ================= PAYROLL TAB ================= -->
+                            <div class="tab-pane fade" id="facultyPayroll">
+
+                                <h4 class="formSectionTitle">Salary & Bank Details</h4>
+
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="number" id="salary" placeholder="Salary" readonly>
+                                    </div>
+                                    <div class="inputWrap">
+                                        <input type="text" id="salary_bank_name" placeholder="Bank Name" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="text" id="salary_account_number" placeholder="Account Number" readonly>
+                                    </div>
+                                    <div class="inputWrap">
+                                        <input type="text" id="bank_ifsc" placeholder="IFSC Code" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="formInputWrap">
+                                    <div class="inputWrap">
+                                        <input type="text" id="pf_number" placeholder="PF Number" readonly>
+                                    </div>
+                                    <div class="inputWrap">
+                                        <input type="text" id="esic_number" placeholder="ESIC Number" readonly>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    </form>
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+<!-- Modal -->
+     <div class="modal fade" id="stuDeleteModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="stuDeleteModalLongTitle">Delete Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modalForm">
+                    <form action="" method="post" id="studentForm">
+                        <div class="inputWrap btnWrap">
+                            <label for="delText">Please enter <span style="color: red;font-weight: 600;"> DELETE  </span>to confirm</label>
+                            <input type="text" id="delText" placeholder="Please Enter" autocomplete="off">
+                        </div>
+                        <div class="inputWrap btnWrap mt-4 flexEnd">
+                            <button type="button" class="mBtn dangerBtn" id="addStudentDeleteBtn">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <script>
+        (function checkAuth() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const token = localStorage.getItem('token');
+
+            if (isLoggedIn != 'true'  ||  !token) {
+                window.location.replace('index.html'); 
+            }
+        })();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/2.3.5/js/dataTables.min.js"></script>
+    <script src="./assets/js/sidebar-loader.js"></script>
+    <script src="./assets/js/jquery.selectric.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script>
+    /*************************
+     * GET FACULTY ID FROM URL
+     *************************/
+    const params = new URLSearchParams(window.location.search);
+    const FACULTY_ID = params.get("empid");
+
+    if (!FACULTY_ID) {
+        window.location.href = "faculties.html";
+    }
+
+    /*************************
+     * FETCH FACULTY ON LOAD
+     *************************/
+    $(document).ready(function () {
+        fetchFaculty();
+    });
+
+    /*************************
+     * FETCH FACULTY DETAILS
+     *************************/
+    function fetchFaculty() {
+
+        $.ajax({
+            url: `${API_URL}/api/adminServices/faculty/${FACULTY_ID}`,
+            type: "GET",
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            },
+            success: function (res) {
+
+                if (!res || !res.data) {
+                    showToast("Faculty data not found", "error");
+                    return;
+                }
+
+                const d = res.data;
+
+                /* ===== PERSONAL DETAILS ===== */
+                $("#name").val(d.name || "");
+                $("#employee_id").val(d.employee_id || "");
+                $("#registration_number").val(d.registration_number || "");
+                $("#designation").val(d.designation || "");
+                $("#email").val(d.email || "");
+                $("#phone").val(d.phone || "");
+                $("#gender").val(d.gender || "");
+                $("#dob").val(d.dob ? d.dob.split("T")[0] : "");
+                $("#address").val(d.address || "");
+
+                /* ===== PROFESSIONAL ===== */
+                $("#joining_date").val(d.joining_date ? d.joining_date.split("T")[0] : "");
+                $("#experience_years").val(d.experience_years || "");
+                $("#qualifications").val(d.qualifications || "");
+                $("#subjects").val(d.subjects || "");
+
+                /* ===== IDENTIFICATION ===== */
+                $("#aadhaar_no").val(d.aadhaar_no || "");
+                $("#pan_number").val(d.pan_number || "");
+
+                /* ===== PAYROLL ===== */
+                $("#salary").val(d.salary || "");
+                $("#salary_bank_name").val(d.salary_bank_name || "");
+                $("#salary_account_number").val(d.salary_account_number || "");
+                $("#bank_ifsc").val(d.bank_ifsc || "");
+                $("#pf_number").val(d.pf_number || "");
+                $("#esic_number").val(d.esic_number || "");
+
+                /* ===== STATUS ===== */
+                $("#status").val(d.status || "");
+            },
+            error: function () {
+                showToast("Failed to fetch faculty details", "error");
+                setTimeout(() => {
+                    window.location.href = "faculty.html";
+                }, 3000);
+            }
+        });
+    }
+
+     /*************************
+     * FETCH FEE Details
+     *************************/
+    function fetchFeeDetails() {
+
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (!user || !user.id) {
+            showToast("User not found in localStorage", "error");
+            return;
+        }
+
+        const studentId = user.id;
+        const academicYearId = 1;
+
+        $('#feeTermsTable').DataTable({
+            destroy: true,
+            processing: true,
+            paging: false,
+            searching: false,
+            ordering: false,
+            info: false,
+
+            ajax: function (data, callback) {
+
+                $.ajax({
+                    url: `${API_URL}/api/adminServices/student-fees/${studentId}?academic_year_id=${academicYearId}`,
+                    type: "GET",
+                    headers: {
+                        Authorization: `Bearer ${authToken}`
+                    },
+                    success: function (res) {
+
+                        if (!res || !res.data) {
+                            showToast("Fee details not found", "error");
+                            callback({
+                                draw: data.draw,
+                                recordsTotal: 0,
+                                recordsFiltered: 0,
+                                data: []
+                            });
+                            return;
+                        }
+
+                        const summary = res.data.summary;
+                        const terms = res.data.terms;
+
+                        /* ================= SUMMARY ================= */
+                        $("#totalAmount").text((summary.total_amount ?? 0).toFixed(2));
+                        $("#feesPaid").text((summary.total_paid ?? 0).toFixed(2));
+                        $("#feesPending").text((summary.total_pending ?? 0).toFixed(2));
+                        $("#feesConcession").text((summary.total_concession ?? 0).toFixed(2));
+
+                        if (summary.payment_percentage > 0) {
+                            $("#paymentPercentage").text(`${summary.payment_percentage}%`);
+                        } else {
+                            $("#paymentPercentage").text("0%");
+                        }
+
+                        $('#progressBarInner')
+                            .css('width', `${summary.payment_percentage ?? 0}%`);
+
+                        /* ================= MAP TERMS ================= */
+                        const rows = terms.map((t, index) => ({
+                            sno: index + 1,
+                            term_name: t.term_name,
+                            amount: t.amount,
+                            paid: t.paid,
+                            concession: t.concession,
+                            pending: t.pending,
+                            status: t.status,
+                            payment_date: t.payment_date ?? "-",
+                            payment_mode: t.payment_mode ?? "-",
+                            transaction_id: t.transaction_id ?? "-"
+                        }));
+
+                        callback({
+                            draw: data.draw,
+                            recordsTotal: rows.length,
+                            recordsFiltered: rows.length,
+                            data: rows
+                        });
+                    },
+
+                    error: function () {
+                        showToast("Failed to fetch fee details", "error");
+                        callback({
+                            draw: data.draw,
+                            recordsTotal: 0,
+                            recordsFiltered: 0,
+                            data: []
+                        });
+                    }
+                });
+            },
+
+            columns: [
+                { data: "sno", title: "#" },
+                { data: "term_name", title: "Term" },
+                { data: "amount", title: "Amount" },
+                { data: "paid", title: "Paid" },
+                { data: "concession", title: "Concession" },
+                { data: "pending", title: "Pending" },
+                {
+                    data: "status",
+                    title: "Status",
+                    render: function (data) {
+                        return `
+                            <span class="badge ${data === 'paid' ? 'bg-success' : 'bg-warning'}">
+                                ${data}
+                            </span>`;
+                    }
+                },
+                { data: "payment_date", title: "Payment Date" },
+                { data: "payment_mode", title: "Mode" },
+                { data: "transaction_id", title: "Txn ID" }
+            ]
+        });
+    }
+
+
+    /*************************
+     * ENABLE EDIT (FACULTY)
+     *************************/
+    $("#editBtn").on("click", function () {
+        $("#facultyForm input, #facultyForm textarea").prop("readonly", false);
+        $("#updateBtn").removeClass("d-none");
+        $(this).addClass("d-none");
+    });
+
+    /*************************
+     * UPDATE FACULTY
+     *************************/
+    $("#updateBtn").on("click", function () {
+
+        const payload = {};
+
+        $("#facultyForm").find("input, textarea, select").each(function () {
+            const id = $(this).attr("id");
+            if (id) {
+                payload[id] = $(this).val();
+            }
+        });
+
+        $.ajax({
+            url: `${API_URL}/api/adminServices/faculty/${FACULTY_ID}`,
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${authToken}`,
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify(payload),
+            success: function () {
+                showToast("Faculty updated successfully", "success");
+
+                // Lock fields again
+                $("#facultyForm input, #facultyForm textarea").prop("readonly", true);
+                $("#editBtn").removeClass("d-none");
+                $("#updateBtn").addClass("d-none");
+            },
+            error: function () {
+                showToast("Failed to update faculty", "error");
+            }
+        });
+    });
+
+
+    /*************************
+     * SHOW DELETE MODAL (FACULTY)
+     *************************/
+    $('#deleteBtn').on('click', function () {
+        $('#stuDeleteModalCenter').modal('show');
+    });
+
+    /*************************
+     * CONFIRM & DELETE FACULTY
+     *************************/
+    $("#addFacultyDeleteBtn").on("click", function () {
+
+        const confirmText = $('#delText').val().trim();
+
+        if (confirmText !== 'DELETE') {
+            showToast("Please type DELETE to confirm", "error");
+            return;
+        }
+
+        $.ajax({
+            url: `${API_URL}/api/adminServices/faculty/${FACULTY_ID}`,
+            type: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            },
+            success: function () {
+                showToast("Faculty deleted successfully", "success");
+                $('#stuDeleteModalCenter').modal('hide');
+
+                setTimeout(() => {
+                    window.location.href = "faculty.html";
+                }, 3000);
+            },
+            error: function () {
+                showToast("Failed to delete faculty", "error");
+            }
+        });
+    });
+
+
+
+
+
+
+
+    
+
+    </script>
+
+    
+</body>
+</html>
