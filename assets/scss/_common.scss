@@ -521,3 +521,18 @@ table.dataTable td.dt-type-date,table.dataTable th.dt-type-date{
         }
     }
 }
+.innerFormWrap{
+    .selectric-wrapper{
+        .selectric{
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background-color: $white;
+            .label{
+                margin: 0;
+                font-size: 14px;
+                padding: 0 10px;
+                color: $black;
+            }
+        }
+    }
+}

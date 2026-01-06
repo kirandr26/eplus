@@ -193,6 +193,9 @@ async function fetchHolidays(year, month) {
  *************************/
 let currentDate = new Date();
 
+/* =========================
+   RENDER CALENDAR
+========================= */
 async function renderCalendar() {
     const tbody = document.getElementById('calendar-body');
     const monthLabel = document.getElementById('current-month');
@@ -208,7 +211,7 @@ async function renderCalendar() {
 
     monthLabel.textContent = `${monthNames[month]} ${year}`;
 
-    // Fetch holidays
+    /* ---- Fetch holidays ---- */
     const holidays = await fetchHolidays(year, month);
     const holidayMap = new Map();
 
@@ -240,7 +243,7 @@ async function renderCalendar() {
         for (let dow = 0; dow < 7; dow++) {
             const cellIndex = week * 7 + dow;
 
-            // Previous month days
+            /* ---- Previous Month ---- */
             if (cellIndex < firstDay) {
                 html += `
                     <td class="inactive">
@@ -249,22 +252,16 @@ async function renderCalendar() {
                 `;
             }
 
-           // Current month days
+            /* ---- Current Month ---- */
             else if (day <= daysInMonth) {
                 const dateStr = `${year}-${String(month + 1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
                 const isHoliday = holidayMap.has(dateStr);
                 const isToday = isCurrentMonth && today.getDate() === day;
 
-                let classes = '';
+                let classes = 'calendar-date';
                 if (isHoliday) classes += ' holiday';
                 if (isToday) classes += ' today';
 
-                let holidayAttr = '';
-                if (isHoliday) {
-                    holidayAttr = `data-holiday="${holidayMap.get(dateStr)}"`;
-                }
-
-                // ---- UPDATED CONTENT ----
                 let content = `<span class="date-number">${day}</span>`;
 
                 if (isHoliday) {
@@ -275,23 +272,16 @@ async function renderCalendar() {
                     `;
                 }
 
-                // if (isToday) {
-                //     content += `
-                //         <span class="today-label">Today</span>
-                //     `;
-                // }
-                // -------------------------
-
                 html += `
-                    <td class="${classes.trim()}" ${holidayAttr}>
+                    <td class="${classes}"
+                        data-date="${dateStr}">
                         ${content}
                     </td>
                 `;
                 day++;
             }
 
-
-            // Next month days
+            /* ---- Next Month ---- */
             else {
                 html += `
                     <td class="inactive">
@@ -308,8 +298,9 @@ async function renderCalendar() {
     tbody.innerHTML = html;
 }
 
-
-
+/* =========================
+   MONTH NAVIGATION
+========================= */
 function previousMonth() {
     currentDate.setMonth(currentDate.getMonth() - 1);
     renderCalendar();
@@ -320,18 +311,62 @@ function nextMonth() {
     renderCalendar();
 }
 
+/* =========================
+   DATE CLICK → OPEN MODAL
+========================= */
+document.addEventListener('click', function (e) {
+    const cell = e.target.closest('.calendar-date');
+    
+    if (!cell) return;
+
+    const selectedDate = cell.getAttribute('data-date');
+    if (!selectedDate) return;
+    
+    document.getElementById('selectedDate').value = selectedDate;
+
+   $('#eventModal').modal('show');
+
+});
+
+/* =========================
+   SAVE EVENT (OPTIONAL)
+========================= */
+document.getElementById('saveEventBtn')?.addEventListener('click', function () {
+
+    const date = document.getElementById('selectedDate').value;
+    const title = document.getElementById('eventTitle').value.trim();
+
+    if (!title) {
+        alert('Please enter event title');
+        return;
+    }
+
+    console.log('Event Saved:', { date, title });
+
+    bootstrap.Modal.getInstance(
+        document.getElementById('eventModal')
+    ).hide();
+});
+
+/* =========================
+   INITIAL LOAD
+========================= */
+renderCalendar();
+
 
 
 /*************************
  * Teachers Data in Dashboard
  *************************/
-const table = new DataTable('#teachTable', {
+
+let searchText = '';
+let table;
+
+table = new DataTable('#teachTable', {
     processing: true,
     serverSide: true,
-
     pageLength: 10,
     lengthChange: false,
-    lengthMenu: [5, 10, 25, 50],
     searching: false,
     ordering: false,
 
@@ -340,11 +375,19 @@ const table = new DataTable('#teachTable', {
         const page = Math.floor(data.start / data.length) + 1;
         const limit = data.length;
 
-        fetch(`${API_URL}/api/adminServices/faculty/facultylist?page=${page}&limit=${limit}`, {
-            method: "GET",
+        const params = new URLSearchParams({
+            page,
+            limit
+        });
+
+        // 🔍 add search only if user typed
+        if (searchText) {
+            params.append('search', searchText);
+        }
+
+        fetch(`${API_URL}/api/adminServices/faculty/facultylist?${params.toString()}`, {
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${authToken}`
+                Authorization: `Bearer ${authToken}`
             }
         })
         .then(res => res.json())
@@ -353,10 +396,9 @@ const table = new DataTable('#teachTable', {
             const rows = res.data.faculties.map(f => ({
                 employee_id: f.employee_id,
                 name: f.name,
-                designation: f.designation || "-",
+                designation: f.designation || '-',
                 email: f.email,
-                status: f.status,
-                
+                status: f.status
             }));
 
             callback({
@@ -366,8 +408,7 @@ const table = new DataTable('#teachTable', {
                 data: rows
             });
         })
-        .catch(err => {
-            console.error("API Error:", err);
+        .catch(() => {
             callback({
                 draw: data.draw,
                 recordsTotal: 0,
@@ -378,36 +419,32 @@ const table = new DataTable('#teachTable', {
     },
 
     columns: [
-        { data: "employee_id", title: "Employee ID" },
-        { data: "name", title: "Name" },
-        { data: "designation", title: "Designation" },
-        { data: "email", title: "Email" },
+        { data: 'employee_id', title: 'Employee ID' },
+        { data: 'name', title: 'Name' },
+        { data: 'designation', title: 'Designation' },
+        { data: 'email', title: 'Email' },
         {
-            data: "status",
-            title: "Status",
-            render: status => {
-                const cls = status === "active" ? "badge-success" : "badge-danger";
-                return `<span class="badge ${cls}">${status}</span>`;
-            }
-        },
-        // {
-        //     data: "action",
-        //     title: "Action",
-        //     render: id => `
-        //         <a href="/faculty/view/${id}" class="mBtn sBtn">
-        //             View
-        //         </a>
-        //     `
-        // }
-    ],
-
-    columnDefs: [
-        {
-            targets: [4],
-            orderable: false
+            data: 'status',
+            title: 'Status',
+            render: s =>
+                `<span class="badge ${s === 'active' ? 'badge-success' : 'badge-danger'}">${s}</span>`
         }
     ]
 });
+
+
+function searchFaculty(value) {
+    searchText = value.trim();
+    table.page(0).draw(false); 
+}
+
+
+
+$('#teacherSearch').on('input', function () {
+    searchFaculty(this.value);
+});
+
+
 /*************************
  * Fee Table in Dashboard
  *************************/

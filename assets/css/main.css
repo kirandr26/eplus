@@ -597,6 +597,18 @@ table.dataTable td.dt-type-date, table.dataTable th.dt-type-date {
   line-height: 24px;
 }
 
+.innerFormWrap .selectric-wrapper .selectric {
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+}
+.innerFormWrap .selectric-wrapper .selectric .label {
+  margin: 0;
+  font-size: 14px;
+  padding: 0 10px;
+  color: #4A5565;
+}
+
 .sidebar {
   position: relative;
   width: 300px;
