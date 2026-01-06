@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="page_wrap">
-       
+        <div id="toastContainer"></div>
         <div class="eContainer">
             <div class="sideBar">
                
@@ -171,37 +171,48 @@
                             <form action="" method="post" id="eventForm" class="innerFormWrap">
 
                                 <!-- Selected Date -->
-                                <div class="inputWrap btnWrap">
-                                    <!-- <label for="selectedDate">
-                                        Selected Date
-                                    </label> -->
+                                <!-- <div class="inputWrap btnWrap">
                                     <input type="text"
                                         id="selectedDate"
-                                        placeholder="selectedDate"
+                                        placeholder="Selected Date"
                                         autocomplete="off"
                                         readonly>
-                                </div>
-
+                                </div> -->
                                 <!-- Event Title -->
                                 <div class="inputWrap btnWrap mt-3">
-                                        <select name="eventType" id="eventType">
-                                            <option value="">Select Eventy Type</option>
-                                            <option value="schoolEvent">School Event</option>
-                                            <option value="holiday">Holiday</option>
-                                        </select>
-                                </div>
-
-                                <!-- Event Title -->
-                                <div class="inputWrap btnWrap mt-3">
-                                    <!-- <label for="eventTitle">
-                                        Event Title
-                                    </label> -->
                                     <input type="text"
                                         id="eventTitle"
                                         placeholder="Enter event title"
                                         autocomplete="off">
-                                        
                                 </div>
+                                 <!-- Event Type -->
+                                <div class="inputWrap btnWrap mt-3">
+                                    <select name="eventType" id="eventType">
+                                        <option value="">Select Event Type</option>
+                                        <option value="schoolEvent">School Event</option>
+                                        <option value="holiday">Holiday</option>
+                                    </select>
+                                </div>
+
+                                <!-- Start Date -->
+                                <div class="inputWrap btnWrap mt-3">
+                                    <input type="date"
+                                        id="startDate"
+                                        placeholder="Start Date"
+                                        autocomplete="off">
+                                </div>
+
+                                <!-- End Date -->
+                                <div class="inputWrap btnWrap mt-3">
+                                    <input type="date"
+                                        id="endDate"
+                                        placeholder="End Date"
+                                        autocomplete="off">
+                                </div>
+
+                               
+
+                                
 
                                 <!-- Buttons -->
                                 <div class="inputWrap btnWrap mt-4 flexEnd">
@@ -215,6 +226,7 @@
                             </form>
                         </div>
                     </div>
+
 
                 </div>
             </div>
@@ -303,6 +315,52 @@
                 error: function () {
                     $("#leaveList").html("<li>Error loading leave data</li>");
                 }
+            });
+
+
+
+            $("#saveEventBtn").on("click", function () {
+
+                const eventType = $("#eventType").val(); // schoolEvent | holiday
+                const name = $("#eventTitle").val().trim();
+                const startDate = $("#startDate").val();
+                const endDate = $("#endDate").val();
+
+                if (!eventType || !name || !startDate || !endDate) {
+                    showToast("Please fill all fields", 'error');
+                    return;
+                }
+
+                const payload = {
+                    name: name,
+                    date_start: startDate,
+                    date_end: endDate,
+                    academic_year_id: 1,
+                    event: eventType === "schoolEvent" // ✅ true / false
+                };
+
+                $.ajax({
+                    url: `${API_URL}/api/adminServices/holiday/holidays`,
+                    type: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${authToken}`,
+                        "Content-Type": "application/json"
+                    },
+                    data: JSON.stringify(payload),
+                    success: function () {
+                        showToast(
+                            eventType === "schoolEvent"
+                                ? "School event added successfully"
+                                : "Holiday added successfully"
+                        );
+                        $("#eventForm")[0].reset();
+                        location.reload()
+                    },
+                    error: function (xhr) {
+                        const msg = xhr.responseJSON?.message || "Failed to save event";
+                        showToast(msg, 'error');
+                    }
+                });
             });
         })
     </script>

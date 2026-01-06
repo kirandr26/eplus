@@ -263,10 +263,11 @@ async function renderCalendar() {
                 if (isToday) classes += ' today';
 
                 let content = `<span class="date-number">${day}</span>`;
-
+                let holidayAttr = '';
                 if (isHoliday) {
+                    holidayAttr = `data-holiday="${holidayMap.get(dateStr)}"`;
                     content = `
-                        <span class="holiday-date" title="${holidayMap.get(dateStr)}">
+                        <span class="holiday-date" data-holiday="${holidayMap.get(dateStr)}" title="${holidayMap.get(dateStr)}">
                             ${day}
                         </span>
                     `;
@@ -274,8 +275,10 @@ async function renderCalendar() {
 
                 html += `
                     <td class="${classes}"
-                        data-date="${dateStr}">
+                        data-date="${dateStr}" ${holidayAttr}>
+                        
                         ${content}
+                        
                     </td>
                 `;
                 day++;
@@ -319,34 +322,16 @@ document.addEventListener('click', function (e) {
     
     if (!cell) return;
 
-    const selectedDate = cell.getAttribute('data-date');
-    if (!selectedDate) return;
+    // const selectedDate = cell.getAttribute('data-date');
+    // if (!selectedDate) return;
     
-    document.getElementById('selectedDate').value = selectedDate;
+    // document.getElementById('selectedDate').value = selectedDate;
 
    $('#eventModal').modal('show');
 
 });
 
-/* =========================
-   SAVE EVENT (OPTIONAL)
-========================= */
-document.getElementById('saveEventBtn')?.addEventListener('click', function () {
 
-    const date = document.getElementById('selectedDate').value;
-    const title = document.getElementById('eventTitle').value.trim();
-
-    if (!title) {
-        alert('Please enter event title');
-        return;
-    }
-
-    console.log('Event Saved:', { date, title });
-
-    bootstrap.Modal.getInstance(
-        document.getElementById('eventModal')
-    ).hide();
-});
 
 /* =========================
    INITIAL LOAD

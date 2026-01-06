@@ -1209,6 +1209,7 @@ input:read-only {
   position: relative;
   padding: 10px;
   text-align: center;
+  margin: 0 2px;
 }
 .calfacWrap .calendar-section .calendar-table tr td.inactive {
   opacity: 0.5;
