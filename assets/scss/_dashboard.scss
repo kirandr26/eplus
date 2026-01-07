@@ -227,6 +227,12 @@
 .cardsWrap{
     position: relative;
     margin-bottom: 32px;
+    &_header{
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
     &_inner{
         position: relative;
         display: flex;

@@ -609,6 +609,13 @@ table.dataTable td.dt-type-date, table.dataTable th.dt-type-date {
   color: #4A5565;
 }
 
+.feePageWrap .cardsWrap_item_icon {
+  font-size: 24px;
+}
+.feePageWrap #feeStructTable tr {
+  cursor: pointer;
+}
+
 .sidebar {
   position: relative;
   width: 300px;
@@ -1068,6 +1075,18 @@ input:read-only {
 .cardsWrap {
   position: relative;
   margin-bottom: 32px;
+}
+.cardsWrap_header {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .cardsWrap_inner {
   position: relative;

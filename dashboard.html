@@ -1,247 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - ePlus</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <link rel="stylesheet" href="./assets/css/selectric.css">
-    <link rel="stylesheet" href="//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css">
-    <link rel="stylesheet" href="./assets/css/main.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/selectric.css" />
+    <link
+      rel="stylesheet"
+      href="//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/main.css" />
+  </head>
+  <body>
     <div class="page_wrap">
-        <div id="toastContainer"></div>
-        <div class="eContainer">
-            <div class="sideBar">
-               
+      <div id="toastContainer"></div>
+      <div class="eContainer">
+        <div class="sideBar"></div>
+        <div class="mainArticle">
+          <div class="cardsWrap">
+            <div class="sectionWrap">
+              <h3>School Administration Dashboard</h3>
+              <p>Welcome back! Here's what's happening today.</p>
             </div>
-            <div class="mainArticle">
-                
-                <div class="cardsWrap">
-                    <div class="sectionWrap">
-                        <h3>School Administration Dashboard</h3>
-                        <p>Welcome back! Here's what's happening today.</p>
-                    </div>
-                    <div class="cardsWrap_inner">
-                        <div class="cardsWrap_item">
-                            <div class="cardsWrap_item_details">
-                                <p>Students</p>
-                                <h2 id="studentsCount">0</h2>
-                            </div>
-                            <div class="cardsWrap_item_icon">
-                               <img src="./assets/images/dashboard/student-icon.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="cardsWrap_item">
-                            <div class="cardsWrap_item_details">
-                                <p>Teachers</p>
-                                <h2 id="teachersCount">0</h2>
-                            </div>
-                            <div class="cardsWrap_item_icon">
-                               <img src="./assets/images/dashboard/teachers-icon.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="cardsWrap_item">
-                            <div class="cardsWrap_item_details">
-                                <p>Events</p>
-                                <h2 id="eventsCount">0</h2>
-                            </div>
-                            <div class="cardsWrap_item_icon">
-                               <img src="./assets/images/dashboard/events-icon.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="cardsWrap_item">
-                            <div class="cardsWrap_item_details">
-                                <p>Students absent Today</p>
-                                <h2 id="spresentCount">0</h2>
-                            </div>
-                            <div class="cardsWrap_item_icon">
-                               <img src="./assets/images/dashboard/stu-absent-icon.svg" alt="">
-                            </div>
-                        </div>
-                        <div class="cardsWrap_item">
-                            <div class="cardsWrap_item_details">
-                                <p>Faculty absent Today</p>
-                                <h2 id="fpresentCount">0</h2>
-                            </div>
-                            <div class="cardsWrap_item_icon">
-                               <img src="./assets/images/dashboard/fac-absent-icon.svg" alt="">
-                            </div>
-                        </div>
-                    </div>
+            <div class="cardsWrap_inner">
+              <div class="cardsWrap_item">
+                <div class="cardsWrap_item_details">
+                  <p>Students</p>
+                  <h2 id="studentsCount">0</h2>
                 </div>
-                <div class="calfacWrap">
-                    <div class="calfacWrap_cal">
-                        <div class="calendar-section">
-                             <div class="sectionWrap">
-                                <h3>School Calendar</h3>
-                            </div>
-                            <div class="calendar-header">
-                                <button class="calendar-nav" onclick="previousMonth()">‹</button>
-                                <div class="calendar-month" id="current-month">December 2025</div>
-                                <button class="calendar-nav" onclick="nextMonth()">›</button>
-                            </div>
-                            
-                            <table class="calendar-table">
-                                <thead>
-                                    <tr>
-                                        <th>Su</th>
-                                        <th>Mo</th>
-                                        <th>Tu</th>
-                                        <th>We</th>
-                                        <th>Th</th>
-                                        <th>Fr</th>
-                                        <th>Sa</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="calendar-body">
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="leaveSection">
-                            <div class="sectionWrap">
-                                <h3>Faculties on Leave</h3>
-                            </div>
-                            <ul id="leaveList">
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="calfacWrap_table ">
-                         <div class="sectionWrap">
-                            <h3>School Administration Dashboard</h3>
-                            <p>Welcome back! Here's what's happening today.</p>
-                        </div>
-                        <div class="calfacWrap_table_search mb-3">
-                            <div class="inputWrap">
-                                <input type="search" name="" id="teacherSearch" placeholder="Search by name or employee ID..." autocomplete="off">
-                            </div>
-                        </div>
-                        <table id="teachTable" class="mTable">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Designation</th>
-                                    <th>Email</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- JS will populate -->
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="cardsWrap_item_icon">
+                  <img
+                    src="./assets/images/dashboard/student-icon.svg"
+                    alt=""
+                  />
                 </div>
-                <div class="feeTable fTable">
-                    <div class="sectionWrap">
-                        <h3>Fee Collection Summary</h3>
-                        <p>Track fee collection across all standards</p>
-                    </div>
-                    <table id="feeSummaryTable" class="mTable"></table>
+              </div>
+              <div class="cardsWrap_item">
+                <div class="cardsWrap_item_details">
+                  <p>Teachers</p>
+                  <h2 id="teachersCount">0</h2>
                 </div>
+                <div class="cardsWrap_item_icon">
+                  <img
+                    src="./assets/images/dashboard/teachers-icon.svg"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="cardsWrap_item">
+                <div class="cardsWrap_item_details">
+                  <p>Events</p>
+                  <h2 id="eventsCount">0</h2>
+                </div>
+                <div class="cardsWrap_item_icon">
+                  <img src="./assets/images/dashboard/events-icon.svg" alt="" />
+                </div>
+              </div>
+              <div class="cardsWrap_item">
+                <div class="cardsWrap_item_details">
+                  <p>Students absent Today</p>
+                  <h2 id="spresentCount">0</h2>
+                </div>
+                <div class="cardsWrap_item_icon">
+                  <img
+                    src="./assets/images/dashboard/stu-absent-icon.svg"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="cardsWrap_item">
+                <div class="cardsWrap_item_details">
+                  <p>Faculty absent Today</p>
+                  <h2 id="fpresentCount">0</h2>
+                </div>
+                <div class="cardsWrap_item_icon">
+                  <img
+                    src="./assets/images/dashboard/fac-absent-icon.svg"
+                    alt=""
+                  />
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="calfacWrap">
+            <div class="calfacWrap_cal">
+              <div class="calendar-section">
+                <div class="sectionWrap">
+                  <h3>School Calendar</h3>
+                </div>
+                <div class="calendar-header">
+                  <button class="calendar-nav" onclick="previousMonth()">
+                    ‹
+                  </button>
+                  <div class="calendar-month" id="current-month">
+                    December 2025
+                  </div>
+                  <button class="calendar-nav" onclick="nextMonth()">›</button>
+                </div>
+
+                <table class="calendar-table">
+                  <thead>
+                    <tr>
+                      <th>Su</th>
+                      <th>Mo</th>
+                      <th>Tu</th>
+                      <th>We</th>
+                      <th>Th</th>
+                      <th>Fr</th>
+                      <th>Sa</th>
+                    </tr>
+                  </thead>
+                  <tbody id="calendar-body"></tbody>
+                </table>
+              </div>
+              <div class="leaveSection">
+                <div class="sectionWrap">
+                  <h3>Faculties on Leave</h3>
+                </div>
+                <ul id="leaveList"></ul>
+              </div>
+            </div>
+            <div class="calfacWrap_table">
+              <div class="sectionWrap">
+                <h3>School Administration Dashboard</h3>
+                <p>Welcome back! Here's what's happening today.</p>
+              </div>
+              <div class="calfacWrap_table_search mb-3">
+                <div class="inputWrap">
+                  <input
+                    type="search"
+                    name=""
+                    id="teacherSearch"
+                    placeholder="Search by name or employee ID..."
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <table id="teachTable" class="mTable">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- JS will populate -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="feeTable fTable">
+            <div class="sectionWrap">
+              <h3>Fee Collection Summary</h3>
+              <p>Track fee collection across all standards</p>
+            </div>
+            <table id="feeSummaryTable" class="mTable"></table>
+          </div>
         </div>
-       <!-- /MODAL -->
+      </div>
+      <!-- /MODAL -->
 
-        <div class="modal fade"
-            id="eventModal"
-            data-bs-backdrop="static"
-            data-bs-keyboard="false"
-            tabindex="-1"
-            aria-hidden="true">
+      <div
+        class="modal fade"
+        id="eventModal"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <!-- HEADER -->
+            <div class="modal-header">
+              <h5 class="modal-title" id="eventModalTitle">Create Event</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
 
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-
-                    <!-- HEADER -->
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="eventModalTitle">Create Event</h5>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close">
-                        </button>
-                    </div>
-
-                    <!-- BODY -->
-                    <div class="modal-body">
-                        <div class="modalForm">
-                            <form action="" method="post" id="eventForm" class="innerFormWrap">
-
-                                <!-- Selected Date -->
-                                <!-- <div class="inputWrap btnWrap">
+            <!-- BODY -->
+            <div class="modal-body">
+              <div class="modalForm">
+                <form
+                  action=""
+                  method="post"
+                  id="eventForm"
+                  class="innerFormWrap"
+                >
+                  <!-- Selected Date -->
+                  <!-- <div class="inputWrap btnWrap">
                                     <input type="text"
                                         id="selectedDate"
                                         placeholder="Selected Date"
                                         autocomplete="off"
                                         readonly>
                                 </div> -->
-                                <!-- Event Title -->
-                                <div class="inputWrap btnWrap mt-3">
-                                    <input type="text"
-                                        id="eventTitle"
-                                        placeholder="Enter event title"
-                                        autocomplete="off">
-                                </div>
-                                 <!-- Event Type -->
-                                <div class="inputWrap btnWrap mt-3">
-                                    <select name="eventType" id="eventType">
-                                        <option value="">Select Event Type</option>
-                                        <option value="schoolEvent">School Event</option>
-                                        <option value="holiday">Holiday</option>
-                                    </select>
-                                </div>
+                  <!-- Event Title -->
+                  <div class="inputWrap btnWrap mt-3">
+                    <input
+                      type="text"
+                      id="eventTitle"
+                      placeholder="Enter event title"
+                      autocomplete="off"
+                    />
+                  </div>
+                  <!-- Event Type -->
+                  <div class="inputWrap btnWrap mt-3">
+                    <select name="eventType" id="eventType">
+                      <option value="">Select Event Type</option>
+                      <option value="schoolEvent">School Event</option>
+                      <option value="holiday">Holiday</option>
+                    </select>
+                  </div>
 
-                                <!-- Start Date -->
-                                <div class="inputWrap btnWrap mt-3">
-                                    <input type="date"
-                                        id="startDate"
-                                        placeholder="Start Date"
-                                        autocomplete="off">
-                                </div>
+                  <!-- Start Date -->
+                  <div class="inputWrap btnWrap mt-3">
+                    <input
+                      type="date"
+                      id="startDate"
+                      placeholder="Start Date"
+                      autocomplete="off"
+                    />
+                  </div>
 
-                                <!-- End Date -->
-                                <div class="inputWrap btnWrap mt-3">
-                                    <input type="date"
-                                        id="endDate"
-                                        placeholder="End Date"
-                                        autocomplete="off">
-                                </div>
+                  <!-- End Date -->
+                  <div class="inputWrap btnWrap mt-3">
+                    <input
+                      type="date"
+                      id="endDate"
+                      placeholder="End Date"
+                      autocomplete="off"
+                    />
+                  </div>
 
-                               
-
-                                
-
-                                <!-- Buttons -->
-                                <div class="inputWrap btnWrap mt-4 flexEnd">
-                                    <button type="button"
-                                            class="mBtn"
-                                            id="saveEventBtn">
-                                        Save Event
-                                    </button>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-
-
-                </div>
+                  <!-- Buttons -->
+                  <div class="inputWrap btnWrap mt-4 flexEnd">
+                    <button type="button" class="mBtn" id="saveEventBtn">
+                      Save Event
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
-
+      </div>
     </div>
     <script>
-        (function checkAuth() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            const token = localStorage.getItem('token');
+      (function checkAuth() {
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        const token = localStorage.getItem("token");
 
-            if (isLoggedIn != 'true'  ||  !token) {
-                window.location.replace('index.html'); 
-            }
-        })();
+        if (isLoggedIn != "true" || !token) {
+          window.location.replace("index.html");
+        }
+      })();
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="//cdn.datatables.net/2.3.5/js/dataTables.min.js"></script>
@@ -250,122 +277,115 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/main.js"></script>
     <script>
-         $('#eventType').selectric({
-            disableOnMobile: false,
-            nativeOnMobile: false
-        });
+      $("#eventType").selectric({
+        disableOnMobile: false,
+        nativeOnMobile: false,
+      });
 
-        $(document).ready(function(){
-            const academicYearId = 1;
-            function getLeaveClass(type) {
-                switch (type.toLowerCase()) {
-                    case 'sick leave':
-                        return '';
-                    case 'casual leave':
-                        return 'cl';
-                    case 'annual leave':
-                    case 'earned leave':
-                        return 'al';
-                    default:
-                        return '';
-                }
+      $(document).ready(function () {
+        const academicYearId = 1;
+        function getLeaveClass(type) {
+          switch (type.toLowerCase()) {
+            case "sick leave":
+              return "";
+            case "casual leave":
+              return "cl";
+            case "annual leave":
+            case "earned leave":
+              return "al";
+            default:
+              return "";
+          }
+        }
+
+        function formatDate(dateStr) {
+          const d = new Date(dateStr);
+          return d.toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "short",
+          });
+        }
+        $.ajax({
+          url: `${API_URL}/api/adminServices/faculty/leave-details?academic_year_id=${academicYearId}`,
+          type: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+          success: function (res) {
+            if (!res.status || !res.data.length) {
+              $("#leaveList").html("<li>No leave records found</li>");
+              return;
             }
 
-            function formatDate(dateStr) {
-                const d = new Date(dateStr);
-                return d.toLocaleDateString('en-IN', {
-                    day: '2-digit',
-                    month: 'short'
-                });
-            }
-            $.ajax({
-                url: `${API_URL}/api/adminServices/faculty/leave-details?academic_year_id=${academicYearId}`,
-                type: "GET",
-                headers: {
-                    "Authorization": `Bearer ${authToken}`
-                },
-                success: function (res) {
+            let html = "";
 
-                    if (!res.status || !res.data.length) {
-                        $("#leaveList").html("<li>No leave records found</li>");
-                        return;
-                    }
+            res.data.forEach((item) => {
+              const cls = getLeaveClass(item.leave_type);
 
-                    let html = "";
+              let leaveText = item.leave_type;
+              if (item.category === "upcoming") {
+                leaveText = `Upcoming Leave - ${formatDate(item.leave_date)}`;
+              }
 
-                    res.data.forEach(item => {
-                        const cls = getLeaveClass(item.leave_type);
-
-                        let leaveText = item.leave_type;
-                        if (item.category === "upcoming") {
-                            leaveText = `Upcoming Leave - ${formatDate(item.leave_date)}`;
-                        }
-
-                        html += `
+              html += `
                             <li>
                                 <p>${item.faculty_name}</p>
                                 <small>${item.employee_id}</small>
                                 <i class="${cls}">${item.leave_type}</i>
                             </li>
                         `;
-                    });
-
-                    $("#leaveList").html(html);
-                },
-                error: function () {
-                    $("#leaveList").html("<li>Error loading leave data</li>");
-                }
             });
 
+            $("#leaveList").html(html);
+          },
+          error: function () {
+            $("#leaveList").html("<li>Error loading leave data</li>");
+          },
+        });
 
+        $("#saveEventBtn").on("click", function () {
+          const eventType = $("#eventType").val(); // schoolEvent | holiday
+          const name = $("#eventTitle").val().trim();
+          const startDate = $("#startDate").val();
+          const endDate = $("#endDate").val();
 
-            $("#saveEventBtn").on("click", function () {
+          if (!eventType || !name || !startDate || !endDate) {
+            showToast("Please fill all fields", "error");
+            return;
+          }
 
-                const eventType = $("#eventType").val(); // schoolEvent | holiday
-                const name = $("#eventTitle").val().trim();
-                const startDate = $("#startDate").val();
-                const endDate = $("#endDate").val();
+          const payload = {
+            name: name,
+            date_start: startDate,
+            date_end: endDate,
+            academic_year_id: 1,
+            event: eventType === "schoolEvent", // ✅ true / false
+          };
 
-                if (!eventType || !name || !startDate || !endDate) {
-                    showToast("Please fill all fields", 'error');
-                    return;
-                }
-
-                const payload = {
-                    name: name,
-                    date_start: startDate,
-                    date_end: endDate,
-                    academic_year_id: 1,
-                    event: eventType === "schoolEvent" // ✅ true / false
-                };
-
-                $.ajax({
-                    url: `${API_URL}/api/adminServices/holiday/holidays`,
-                    type: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${authToken}`,
-                        "Content-Type": "application/json"
-                    },
-                    data: JSON.stringify(payload),
-                    success: function () {
-                        showToast(
-                            eventType === "schoolEvent"
-                                ? "School event added successfully"
-                                : "Holiday added successfully"
-                        );
-                        $("#eventForm")[0].reset();
-                        location.reload()
-                    },
-                    error: function (xhr) {
-                        const msg = xhr.responseJSON?.message || "Failed to save event";
-                        showToast(msg, 'error');
-                    }
-                });
-            });
-        })
+          $.ajax({
+            url: `${API_URL}/api/adminServices/holiday/holidays`,
+            type: "POST",
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+              "Content-Type": "application/json",
+            },
+            data: JSON.stringify(payload),
+            success: function () {
+              showToast(
+                eventType === "schoolEvent"
+                  ? "School event added successfully"
+                  : "Holiday added successfully"
+              );
+              $("#eventForm")[0].reset();
+              location.reload();
+            },
+            error: function (xhr) {
+              const msg = xhr.responseJSON?.message || "Failed to save event";
+              showToast(msg, "error");
+            },
+          });
+        });
+      });
     </script>
-   
-
-    
-</body>
+  </body>
 </html>

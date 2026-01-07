@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - ePlus</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/selectric.css" />
+    <link
+      rel="stylesheet"
+      href="//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css"
+    />
+    <link rel="stylesheet" href="./assets/css/main.css" />
+  </head>
+  <body>
+    <div class="page_wrap feePageWrap">
+      <div id="toastContainer"></div>
+      <div class="eContainer">
+        <div class="sideBar"></div>
+        <div class="mainArticle">
+          <div class="cardsWrap">
+            <div class="cardsWrap_header">
+              <div class="sectionWrap">
+                <h3>Fee Management</h3>
+                <p>Manage and track school fee structures and collections.</p>
+              </div>
+              <div class="filterWrap">
+                <select id="yearSelector">
+                  <option value="">Select Academic Year</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="cardsWrap_inner">
+              <div class="cardsWrap_item">
+                <div class="cardsWrap_item_details">
+                  <p>Total Amount</p>
+                  <h2 id="totalAmount">0</h2>
+                </div>
+                <div class="cardsWrap_item_icon">₹</div>
+              </div>
+              <div class="cardsWrap_item">
+                <div class="cardsWrap_item_details">
+                  <p>Paid</p>
+                  <h2 id="paidAmount">0</h2>
+                </div>
+                <div class="cardsWrap_item_icon">✓</div>
+              </div>
+              <div class="cardsWrap_item">
+                <div class="cardsWrap_item_details">
+                  <p>Pending</p>
+                  <h2 id="pendingAmount">0</h2>
+                </div>
+                <div class="cardsWrap_item_icon">⏱</div>
+              </div>
+              <div class="cardsWrap_item">
+                <div class="cardsWrap_item_details">
+                  <p>Total Concession</p>
+                  <h2 id="concessionAmount">0</h2>
+                </div>
+                <div class="cardsWrap_item_icon">%</div>
+              </div>
+            </div>
+          </div>
+          <div class="calfacWrap">
+            <div class="calfacWrap_table">
+              <div class="cardsWrap_header">
+                <div class="sectionWrap">
+                  <h3>Fee Structures</h3>
+                </div>
+                <div class="inputWrap">
+                  <select name="allStandard" id="allStandard"></select>
+                </div>
+              </div>
+
+              <div class="calfacWrap_table_search mb-3"></div>
+              <table id="feeStructTable" class="mTable">
+                <thead>
+                  <tr>
+                    <th>Fee Type</th>
+                    <th>Standard</th>
+                    <th>Amount</th>
+                    <th>Terms Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- JS will populate -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /MODAL -->
+
+      <div
+        class="modal fade"
+        id="eventModal"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <!-- HEADER -->
+            <div class="modal-header">
+              <h5 class="modal-title" id="eventModalTitle">Create Event</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
+              <div class="modalForm">
+                <form
+                  action=""
+                  method="post"
+                  id="eventForm"
+                  class="innerFormWrap"
+                >
+                  <!-- Selected Date -->
+                  <!-- <div class="inputWrap btnWrap">
+                                    <input type="text"
+                                        id="selectedDate"
+                                        placeholder="Selected Date"
+                                        autocomplete="off"
+                                        readonly>
+                                </div> -->
+                  <!-- Event Title -->
+                  <div class="inputWrap btnWrap mt-3">
+                    <input
+                      type="text"
+                      id="eventTitle"
+                      placeholder="Enter event title"
+                      autocomplete="off"
+                    />
+                  </div>
+                  <!-- Event Type -->
+                  <div class="inputWrap btnWrap mt-3">
+                    <select name="eventType" id="eventType">
+                      <option value="">Select Event Type</option>
+                      <option value="schoolEvent">School Event</option>
+                      <option value="holiday">Holiday</option>
+                    </select>
+                  </div>
+
+                  <!-- Start Date -->
+                  <div class="inputWrap btnWrap mt-3">
+                    <input
+                      type="date"
+                      id="startDate"
+                      placeholder="Start Date"
+                      autocomplete="off"
+                    />
+                  </div>
+
+                  <!-- End Date -->
+                  <div class="inputWrap btnWrap mt-3">
+                    <input
+                      type="date"
+                      id="endDate"
+                      placeholder="End Date"
+                      autocomplete="off"
+                    />
+                  </div>
+
+                  <!-- Buttons -->
+                  <div class="inputWrap btnWrap mt-4 flexEnd">
+                    <button type="button" class="mBtn" id="saveEventBtn">
+                      Save Event
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function checkAuth() {
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        const token = localStorage.getItem("token");
+
+        if (isLoggedIn != "true" || !token) {
+          window.location.replace("index.html");
+        }
+      })();
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/2.3.5/js/dataTables.min.js"></script>
+    <script src="./assets/js/sidebar-loader.js"></script>
+    <script src="./assets/js/jquery.selectric.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script>
+      $(document).ready(function () {
+        let selectedYearId = 1; // default
+        let selectedStandardId = ""; // default
+
+        /* ==============================
+       SAFE SELECTRIC INIT HELPER
+    ============================== */
+        function initSelectric($el) {
+          if ($el.data("selectric")) {
+            $el.selectric("refresh");
+          } else {
+            $el.selectric({
+              disableOnMobile: false,
+              nativeOnMobile: false,
+            });
+          }
+        }
+
+        /* ==============================
+       LOAD ACADEMIC YEARS
+    ============================== */
+        function loadAcademicYears() {
+          $.ajax({
+            url: `${API_URL}/api/adminServices/academic-years`,
+            type: "GET",
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            success: function (res) {
+              if (!res.status || !res.data.length) return;
+
+              const $year = $("#yearSelector");
+              $year
+                .empty()
+                .append(`<option value="">Select Academic Year</option>`);
+
+              // Current year first
+              const years = res.data.sort(
+                (a, b) => b.is_current - a.is_current
+              );
+
+              years.forEach((y) => {
+                $year.append(`
+                        <option value="${y.id}" ${
+                  y.is_current ? "selected" : ""
+                }>
+                            ${y.year_name}
+                        </option>
+                    `);
+
+                if (y.is_current) {
+                  selectedYearId = y.id;
+                }
+              });
+
+              initSelectric($year);
+
+              // Load table after year load
+              loadFeeStructures();
+            },
+            error: function () {
+              showToast("Failed to load academic years", "error");
+            },
+          });
+        }
+
+        /* ==============================
+       LOAD STANDARDS
+    ============================== */
+        function fetchStandards() {
+          $.ajax({
+            url: `${API_URL}/api/adminServices/standards`,
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            success: function (res) {
+              const $standard = $("#allStandard");
+
+              $standard
+                .empty()
+                .append(`<option value="">All Standards</option>`);
+
+              res.data.forEach((s) => {
+                $standard.append(`
+                        <option value="${s.id}">
+                            ${s.name}
+                        </option>
+                    `);
+              });
+
+              initSelectric($standard);
+            },
+            error: function () {
+              showToast("Failed to load standards", "error");
+            },
+          });
+        }
+
+        /* ==============================
+       LOAD FEE STRUCTURES
+    ============================== */
+        function loadFeeStructures() {
+          const params = new URLSearchParams();
+
+          if (selectedYearId) params.append("academic_year_id", selectedYearId);
+
+          if (selectedStandardId)
+            params.append("standard_id", selectedStandardId);
+
+          params.append("page", 1);
+          params.append("limit", 10);
+
+          $.ajax({
+            url: `${API_URL}/api/adminServices/fee-structures?${params.toString()}`,
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+              "Content-Type": "application/json",
+            },
+            success: function (res) {
+              const tbody = $("#feeStructTable tbody");
+              tbody.empty();
+
+              const data = res.data.fee_structures;
+
+              if (!data.length) {
+                tbody.append(`
+                        <tr>
+                            <td colspan="4" style="text-align:center;">
+                                No data found
+                            </td>
+                        </tr>
+                    `);
+                return;
+              }
+
+              data.forEach((item) => {
+                tbody.append(`
+                        <tr class="fee-row" data-standard-id="${item.standard_id}">
+                            <td>${item.fee_type}</td>
+                            <td>${item.standard_name}</td>
+                            <td>${item.total_amount}</td>
+                            <td>${item.terms_count}</td>
+                        </tr>
+                    `);
+              });
+            },
+            error: function () {
+              showToast("Failed to load fee structures", "error");
+            },
+          });
+        }
+
+        $("#feeStructTable").on("click", ".fee-row", function () {
+            const standardId = $(this).data("standard-id");
+
+            if (!standardId) return;
+
+            // Navigate to fee detail page
+            window.location.href = `fee-detail.html?standard_id=${standardId}, _blank`;
+        });
+
+        /* ==============================
+        FILTER EVENTS
+        ============================== */
+
+            $("#yearSelector").on("change", function () {
+                selectedYearId = $(this).val();
+                loadFeeStructures();
+                });
+
+                $("#allStandard").on("change", function () {
+                selectedStandardId = $(this).val();
+                loadFeeStructures();
+            });
+
+            /* ==============================
+        INITIAL LOAD
+        ============================== */
+            loadAcademicYears();
+                fetchStandards();
+            });
+    </script>
+  </body>
+</html>

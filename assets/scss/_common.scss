@@ -536,3 +536,20 @@ table.dataTable td.dt-type-date,table.dataTable th.dt-type-date{
         }
     }
 }
+
+// Fee page
+
+.feePageWrap{
+    .cardsWrap{
+        &_item{
+            &_icon{
+                font-size: 24px;
+            }
+        }
+    }
+    #feeStructTable{
+        tr{
+            cursor: pointer;
+        }
+    }
+}
