@@ -553,3 +553,28 @@ table.dataTable td.dt-type-date,table.dataTable th.dt-type-date{
         }
     }
 }
+.filterWrap{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 10px;
+    button{
+        min-width: 120px;
+        text-align: center;
+        span{
+            color: $white;
+        }
+    }
+}
+#studentFeesTable{
+    tr{
+        td{
+            small{
+                font-size: 12px;
+                margin-top: 5px;
+                display: block;
+            }
+        }
+    }
+}

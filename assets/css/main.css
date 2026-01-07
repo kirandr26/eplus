@@ -616,6 +616,33 @@ table.dataTable td.dt-type-date, table.dataTable th.dt-type-date {
   cursor: pointer;
 }
 
+.filterWrap {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  grid-gap: 10px;
+}
+.filterWrap button {
+  min-width: 120px;
+  text-align: center;
+}
+.filterWrap button span {
+  color: #fff;
+}
+
+#studentFeesTable tr td small {
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
+
 .sidebar {
   position: relative;
   width: 300px;

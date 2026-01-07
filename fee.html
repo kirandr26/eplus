@@ -345,7 +345,7 @@
 
               data.forEach((item) => {
                 tbody.append(`
-                        <tr class="fee-row" data-standard-id="${item.standard_id}">
+                        <tr class="fee-row" data-standard-id="${item.standard_id}" data-fee-id="${item.id}">
                             <td>${item.fee_type}</td>
                             <td>${item.standard_name}</td>
                             <td>${item.total_amount}</td>
@@ -362,11 +362,12 @@
 
         $("#feeStructTable").on("click", ".fee-row", function () {
             const standardId = $(this).data("standard-id");
+            const feeId = $(this).data("fee-id");
 
             if (!standardId) return;
 
             // Navigate to fee detail page
-            window.location.href = `fee-detail.html?standard_id=${standardId}, _blank`;
+            window.location.href = `fee-details.html?standard_id=${standardId}&fee_structure=${feeId}`;
         });
 
         /* ==============================
