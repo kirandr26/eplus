@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/custom.css" />
 </head>
 <body>
     <div class="page_wrap">
@@ -167,6 +168,11 @@
                                     </div>
                                 </div>
 
+                                <div class="inputWrap btnWrap d-flex gap-2">
+                                    <button type="button" class="mBtn" id="editPayrollBtn">Edit Payroll</button>
+                                    <button type="button" class="mBtn d-none" id="updatePayrollBtn">Update Payroll</button>
+                                </div>
+
                             </div>
 
                         </div>
@@ -179,11 +185,11 @@
         </div>
     </div>
 <!-- Modal -->
-     <div class="modal fade" id="stuDeleteModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+     <div class="modal fade" id="facDeleteModalCenter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="stuDeleteModalLongTitle">Delete Student</h5>
+                <h5 class="modal-title" id="facDeleteModalCenter">Delete Student</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -194,7 +200,7 @@
                             <input type="text" id="delText" placeholder="Please Enter" autocomplete="off">
                         </div>
                         <div class="inputWrap btnWrap mt-4 flexEnd">
-                            <button type="button" class="mBtn dangerBtn" id="addStudentDeleteBtn">Confirm</button>
+                            <button type="button" class="mBtn dangerBtn" id="facultyDeleteBtn">Confirm</button>
                         </div>
                     </form>
                 </div>
@@ -471,42 +477,94 @@
      * SHOW DELETE MODAL (FACULTY)
      *************************/
     $('#deleteBtn').on('click', function () {
-        $('#stuDeleteModalCenter').modal('show');
+        $('#facDeleteModalCenter').modal('show');
+        $('#delText').val('');
+    });
+
+    
+
+    /*************************
+     * ENABLE EDIT (PAYROLL)
+     *************************/
+    $("#editPayrollBtn").on("click", function () {
+        $("#facultyPayroll .inputWrap input").prop("readonly", false);
+        $("#updatePayrollBtn").removeClass("d-none");
+        $(this).addClass("d-none");
     });
 
     /*************************
-     * CONFIRM & DELETE FACULTY
+     * UPDATE PAYROLL
      *************************/
-    $("#addFacultyDeleteBtn").on("click", function () {
+    $("#updatePayrollBtn").on("click", function () {
 
-        const confirmText = $('#delText').val().trim();
-
-        if (confirmText !== 'DELETE') {
-            showToast("Please type DELETE to confirm", "error");
-            return;
-        }
+        const payload = {
+            salary: $("#salary").val(),
+            salary_bank_name: $("#salary_bank_name").val(),
+            salary_account_number: $("#salary_account_number").val(),
+            bank_ifsc: $("#bank_ifsc").val(),
+            pf_number: $("#pf_number").val(),
+            esic_number: $("#esic_number").val()
+        };
 
         $.ajax({
-            url: `${API_URL}/api/adminServices/faculty/${FACULTY_ID}`,
-            type: "DELETE",
-            headers: {
-                "Authorization": `Bearer ${authToken}`
-            },
-            success: function () {
-                showToast("Faculty deleted successfully", "success");
-                $('#stuDeleteModalCenter').modal('hide');
+                url: `${API_URL}/api/adminServices/faculty/${FACULTY_ID}`,
+                method: "PUT",
+                headers: {
+                    "Authorization": `Bearer ${authToken}`,
+                    "Content-Type": "application/json"
+                },
+                data: JSON.stringify(payload),
+                success: function () {
+                    showToast("Payroll updated successfully", "success");
 
-                setTimeout(() => {
-                    window.location.href = "faculty.html";
-                }, 3000);
-            },
-            error: function () {
-                showToast("Failed to delete faculty", "error");
-            }
+                    $(".payroll-field").prop("readonly", true);
+                    $("#editPayrollBtn").removeClass("d-none");
+                    $("#updatePayrollBtn").addClass("d-none");
+                },
+                error: function () {
+                    showToast("Failed to update payroll", "error");
+                }
+            });
         });
-    });
 
 
+        /*************************
+         * SOFT DELETE FACULTY
+         *************************/
+        $("#facultyDeleteBtn").on("click", function () {
+
+            const confirmText = $('#delText').val().trim();
+
+            if (confirmText !== 'DELETE') {
+                showToast("Please type DELETE to confirm", "error");
+                return;
+            }
+
+            const payload = {
+                status: "inactive"
+            };
+
+            $.ajax({
+                url: `${API_URL}/api/adminServices/faculty/${FACULTY_ID}`,
+                method: "PUT",
+                headers: {
+                    "Authorization": `Bearer ${authToken}`,
+                    "Content-Type": "application/json"
+                },
+                data: JSON.stringify(payload),
+                success: function () {
+                    showToast("Faculty marked as inactive", "success");
+                    $('#stuDeleteModalCenter').modal('hide');
+
+                    setTimeout(() => {
+                        window.location.href = "faculty.html";
+                    }, 2000);
+                },
+                error: function () {
+                    showToast("Failed to update faculty status", "error");
+                }
+            });
+        });
 
 
 

@@ -36,9 +36,15 @@
         align-items: center;
         justify-content: space-between;
         grid-gap: 20px;
+        width: 100%;
+        margin-bottom: 10px;
+        .inputWrap{
+            margin-bottom: 0;
+        }
     }
     .inputWrap{
         width: 100%;
+        margin-bottom: 10px;
     }
     .btnWrap{
         display: flex;

@@ -706,9 +706,15 @@ table.dataTable td.dt-type-date, table.dataTable th.dt-type-date {
       -ms-flex-pack: justify;
           justify-content: space-between;
   grid-gap: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.formInner .formInputWrap .inputWrap {
+  margin-bottom: 0;
 }
 .formInner .inputWrap {
   width: 100%;
+  margin-bottom: 10px;
 }
 .formInner .btnWrap {
   display: -webkit-box;

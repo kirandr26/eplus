@@ -18,6 +18,7 @@
       href="//cdn.datatables.net/2.3.5/css/dataTables.dataTables.min.css"
     />
     <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" href="./assets/css/custom.css" />
   </head>
   <body>
     <div class="page_wrap">
@@ -277,6 +278,28 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/main.js"></script>
     <script>
+        /* =========================
+        DATE CLICK → OPEN MODAL
+        ========================= */
+        document.addEventListener('click', function (e) {
+            const cell = e.target.closest('.calendar-date');
+            if (!cell) return;
+
+            const selectedDate = cell.getAttribute('data-date');
+            if (!selectedDate) return;
+
+            // Set date in modal inputs
+            document.getElementById('startDate').value = selectedDate;
+            // document.getElementById('endDate').value = selectedDate; // optional
+
+            // Show modal (Bootstrap 5)
+            const modal = new bootstrap.Modal(document.getElementById('eventModal'));
+            modal.show();
+        });
+
+        document.getElementById('startDate').addEventListener('change', function () {
+            document.getElementById('endDate').min = this.value;
+        });
       $("#eventType").selectric({
         disableOnMobile: false,
         nativeOnMobile: false,

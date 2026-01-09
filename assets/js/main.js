@@ -314,22 +314,8 @@ function nextMonth() {
     renderCalendar();
 }
 
-/* =========================
-   DATE CLICK → OPEN MODAL
-========================= */
-document.addEventListener('click', function (e) {
-    const cell = e.target.closest('.calendar-date');
-    
-    if (!cell) return;
 
-    // const selectedDate = cell.getAttribute('data-date');
-    // if (!selectedDate) return;
-    
-    // document.getElementById('selectedDate').value = selectedDate;
 
-   $('#eventModal').modal('show');
-
-});
 
 
 
