@@ -138,6 +138,7 @@
                     name=""
                     id="studentSearch"
                     placeholder="Search Here...."
+                    autocomplete="off"
                   />
                 </div>
               </div>
@@ -235,7 +236,7 @@
     <script src="./assets/js/jquery.selectric.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/main.js"></script>
-    <script>
+<script>
 $(document).ready(function () {
 
   /* =========================
@@ -265,6 +266,7 @@ $(document).ready(function () {
     type: "GET",
     headers: { Authorization: `Bearer ${authToken}` },
     success: function (res) {
+
       const fee = res.data.fee_structure;
       const terms = res.data.terms || [];
 
@@ -280,16 +282,22 @@ $(document).ready(function () {
       `);
 
       const termBody = $("#feeBreakDownTable tbody").empty();
-      terms.length
-        ? terms.forEach(t => termBody.append(`
-            <tr>
-              <td>${t.term_name}</td>
-              <td>${t.amount}</td>
-              <td>${new Date(t.due_date).toLocaleDateString()}</td>
-              <td>${t.description || "-"}</td>
-            </tr>
-          `))
-        : termBody.append(`<tr><td colspan="4">No terms found</td></tr>`);
+
+      if (!terms.length) {
+        termBody.append(`<tr><td colspan="4">No terms found</td></tr>`);
+        return;
+      }
+
+      terms.forEach(t => {
+        termBody.append(`
+          <tr>
+            <td>${t.term_name}</td>
+            <td>${t.amount}</td>
+            <td>${new Date(t.due_date).toLocaleDateString()}</td>
+            <td>${t.description || "-"}</td>
+          </tr>
+        `);
+      });
     }
   });
 
@@ -297,11 +305,21 @@ $(document).ready(function () {
      GLOBAL FILTER STATE
   ========================= */
   let studentFeesTable;
+  let debounce;
+
   let studentFeeFilters = {
     academic_year_id: 1,
     search: "",
     payment_status: ""
   };
+
+  /* =========================
+     FILTER BUTTON ACTIVE STATE
+  ========================= */
+  function setActiveFilter(btn) {
+    $(".filterWrap .mBtn").removeClass("active");
+    $(btn).addClass("active");
+  }
 
   /* =========================
      INIT STUDENT FEES TABLE
@@ -336,6 +354,7 @@ $(document).ready(function () {
         type: "GET",
         headers: { Authorization: `Bearer ${authToken}` },
         success: function (res) {
+
           const d = res.data;
 
           /* SUMMARY CARDS */
@@ -363,37 +382,32 @@ $(document).ready(function () {
     columns: [
       {
         data: "student_name",
-                render: (d, t, r) =>
-                `<strong>${d}</strong><br><small>${r.registration_number}</small>`
-            },
-            { data: null, render: r => r.terms.reduce((s, t) => s + t.term_amount, 0) },
-            { data: null, render: r => r.terms.reduce((s, t) => s + t.paid_amount, 0) },
-            { data: null, render: r => r.terms.reduce((s, t) => s + t.concession_amount, 0) },
-            { data: null, render: r => r.terms.reduce((s, t) => s + t.pending_amount, 0) },
-            {
-        data: null,
-        render: r => {
-            const statuses = r.terms.map(t => t.payment_status);
-
-            const allPaid = statuses.every(s => s === "paid");
-            const allPending = statuses.every(s => s === "pending");
-
-            if (allPaid) {
-            return `<span class="badge badge-success">Paid</span>`;
-            }
-
-            if (allPending) {
-            return `<span class="badge badge-danger">Pending</span>`;
-            }
-
-            return `<span class="badge bg-warning">Partial</span>`;
-        }
-        },
+        render: (d, t, r) =>
+          `<strong>${d}</strong><br><small>${r.registration_number}</small>`
+      },
+      { data: null, render: r => r.terms.reduce((s, t) => s + t.term_amount, 0) },
+      { data: null, render: r => r.terms.reduce((s, t) => s + t.paid_amount, 0) },
+      { data: null, render: r => r.terms.reduce((s, t) => s + t.concession_amount, 0) },
+      { data: null, render: r => r.terms.reduce((s, t) => s + t.pending_amount, 0) },
       {
         data: null,
         render: r => {
-          const last = r.terms.filter(t => t.payment_date)
+          const statuses = r.terms.map(t => t.payment_status);
+          const allPaid = statuses.every(s => s === "paid");
+          const allPending = statuses.every(s => s === "pending");
+
+          if (allPaid) return `<span class="badge badge-success">Paid</span>`;
+          if (allPending) return `<span class="badge badge-danger">Pending</span>`;
+          return `<span class="badge bg-warning">Partial</span>`;
+        }
+      },
+      {
+        data: null,
+        render: r => {
+          const last = r.terms
+            .filter(t => t.payment_date)
             .sort((a, b) => new Date(b.payment_date) - new Date(a.payment_date))[0];
+
           return last ? new Date(last.payment_date).toLocaleDateString() : "-";
         }
       }
@@ -401,43 +415,53 @@ $(document).ready(function () {
   });
 
   /* =========================
-     FILTER BUTTONS
+     FILTER BUTTON EVENTS
   ========================= */
-  $("#allCountBtn").click(() => {
+  $("#allCountBtn").on("click", function () {
     studentFeeFilters.payment_status = "";
+    setActiveFilter(this);
     studentFeesTable.ajax.reload();
   });
 
-  $("#paidCountBtn").click(() => {
+  $("#paidCountBtn").on("click", function () {
     studentFeeFilters.payment_status = "paid";
+    setActiveFilter(this);
     studentFeesTable.ajax.reload();
   });
 
-  $("#pendingCountBtn").click(() => {
+  $("#pendingCountBtn").on("click", function () {
     studentFeeFilters.payment_status = "pending";
+    setActiveFilter(this);
     studentFeesTable.ajax.reload();
   });
 
-  $("#partialCountBtn").click(() => {
+  $("#partialCountBtn").on("click", function () {
     studentFeeFilters.payment_status = "partial";
+    setActiveFilter(this);
     studentFeesTable.ajax.reload();
   });
 
   /* =========================
-     SEARCH (KEYUP)
+     SEARCH WITH RESET
   ========================= */
-  let debounce;
   $("#studentSearch").on("keyup", function () {
     clearTimeout(debounce);
-    const val = this.value;
+    const val = this.value.trim();
+
     debounce = setTimeout(() => {
       studentFeeFilters.search = val;
       studentFeesTable.ajax.reload();
     }, 400);
   });
 
+  /* =========================
+     DEFAULT ACTIVE FILTER
+  ========================= */
+  setActiveFilter("#allCountBtn");
+
 });
 </script>
+
 
 
   </body>

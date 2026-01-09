@@ -660,13 +660,7 @@ $(document).on('input', '#searchTeacher', function () {
 
 
 
-/*************************
- * INIT
- *************************/
-window.addEventListener('DOMContentLoaded', () => {
-    fetchDashboardData();
-    renderCalendar();
-});
+
 
 
 

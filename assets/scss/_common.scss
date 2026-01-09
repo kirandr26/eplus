@@ -565,6 +565,9 @@ table.dataTable td.dt-type-date,table.dataTable th.dt-type-date{
         span{
             color: $white;
         }
+        &.active{
+            background-color: #1447E6;
+        }
     }
 }
 #studentFeesTable{

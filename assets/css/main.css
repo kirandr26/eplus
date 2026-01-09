@@ -636,6 +636,9 @@ table.dataTable td.dt-type-date, table.dataTable th.dt-type-date {
 .filterWrap button span {
   color: #fff;
 }
+.filterWrap button.active {
+  background-color: #1447E6;
+}
 
 #studentFeesTable tr td small {
   font-size: 12px;
