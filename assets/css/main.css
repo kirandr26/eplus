@@ -1332,7 +1332,7 @@ input:read-only {
 .calfacWrap .calendar-section .calendar-table tr td.holiday:before {
   content: "";
   position: absolute;
-  bottom: 66%;
+  bottom: 69%;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
@@ -1343,7 +1343,7 @@ input:read-only {
 }
 @media (max-width: 1536px) {
   .calfacWrap .calendar-section .calendar-table tr td.holiday:before {
-    bottom: 70%;
+    bottom: 74%;
   }
 }
 .calfacWrap .calendar-section .calendar-table tr td.holiday:hover:before, .calfacWrap .calendar-section .calendar-table tr td.holiday:hover:after {

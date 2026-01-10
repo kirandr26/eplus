@@ -405,7 +405,7 @@
                         &:before {
                             content: '';
                             position: absolute;
-                            bottom: 66%;
+                            bottom: 69%;
                             left: 50%;
                             transform: translateX(-50%);
                             border-width: 10px;
@@ -413,7 +413,7 @@
                             border-color:#FF6B35 transparent transparent transparent;
                             opacity: 0;
                             @include breakpoint(1536px){
-                                bottom: 70%;
+                                bottom: 74%;
                             }
                         }
                         &:hover{
